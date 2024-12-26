@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="/css/alert.css">
+<!-- HEADER -->
+<div id="header-placeholder"></div>
+<script>
+	fetch('header.html')
+		.then(response => response.text())
+		.then(text => document.getElementById('header-placeholder').innerHTML = text);
+</script>
+<!-- HEADER -->
+<body>
+
+
+
+	<!-- SIDEBAR -->
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<!-- sidebar -->
+		<div id="sidebar-placeholder"></div>
+		<script>
+			fetch('sidebar.html')
+				.then(response => response.text())
+				.then(text => document.getElementById('sidebar-placeholder').innerHTML = text);
+		</script>
+		<!-- sidebar -->
+	</section>
+	<!-- SIDEBAR -->
+	<!-- SIDEBAR -->
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<div id="nav-placeholder"></div>
+		<script>
+			fetch('nav.html')
+				.then(response => response.text())
+				.then(text => {document.getElementById('nav-placeholder').innerHTML = text;
+			let admin=	 JSON.parse(localStorage.getItem('Admin'));
+			console.log(admin);
+			let img=document.getElementById("admin-img");
+			img.src=admin.image;
+			const switchMode = document.getElementById('switch-mode');
+
+			switchMode.addEventListener('change', function () {
+				if(this.checked) {
+					document.body.classList.add('dark');
+				} else {
+					document.body.classList.remove('dark');
+				}
+			});
+			// TOGGLE SIDEBAR
+			const menuBar = document.querySelector('#content nav .bx.bx-menu');
+			const sidebar = document.getElementById('sidebar');
+
+			menuBar.addEventListener('click', function () {
+				sidebar.classList.toggle('hide');
+			});
+			});
+		</script>
+
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>>لوحة التحكم </h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="/#">لوحة التحكم </a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="/#">الرئيسية</a>
+						</li>
+					</ul>
+				</div>
+				
+			</div>
+
+			<ul class="box-info">
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+					<span class="text">
+						<h3 id="request_num"></h3>
+						<p>الطلبات الحديثة </p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+					<span class="text">
+						<h3 id="orphen_num"></h3>
+						<p>الأيتام
+
+						</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-dollar-circle' ></i>
+					<span class="text">
+						<h3 id="donation_num"> </h3>
+						<p>إجمالي التبرعات </p>
+					</span>
+				</li>
+			</ul>
+
+
+			<div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>الطلبات الحديثة</h3>
+					 
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>المسخدم</th>
+								<th>تاريخ التقديم  </th>
+								<th>الوضع </th>
+							</tr>
+						</thead>
+						<tbody id="requests">
+						 
+						 
+						</tbody>
+					</table>
+				</div>
+
+				<div class="todo">
+					<div class="head">
+						<h3>المشاريع</h3>
+						<a href="/project/addproj.html">	<i class='bx bx-plus' ></i></a>
+					
+						 
+					</div>
+					<ul class="todo-list" id="projects">
+
+						 
+					</ul>
+				</div>
+			</div>
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	 
+	<script src="js/script.js"></script>
+	<script src="/js/home/home.js"></script>
+</body>
+</html>
