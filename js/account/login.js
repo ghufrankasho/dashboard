@@ -101,8 +101,8 @@ var baseURL = getBaseURL();
          
           localStorage.setItem('token', response.token);
         
-          
-         window.location.href =`/index.html`;
+          console.log(window.location.hostname);
+        //  window.location.href =`/index.html`;
          
         }
         else {
