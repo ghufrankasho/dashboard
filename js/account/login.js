@@ -89,6 +89,7 @@ function submitSignInForm(event) {
 console.log(formData);
 var baseURL = getBaseURL();
     var xhr = new XMLHttpRequest();
+    console.log(window.location.hostname);
     xhr.open('POST', `${baseURL}/auth/login`, true);
     xhr.setRequestHeader('Content-Type', 'application/json'); // Set the content type to JSON
     xhr.onreadystatechange = function () {
@@ -101,7 +102,7 @@ var baseURL = getBaseURL();
          
           localStorage.setItem('token', response.token);
         
-          console.log(window.location.hostname);
+          
         //  window.location.href =`/index.html`;
          
         }
