@@ -1,17 +1,18 @@
 
 let warehouse_id=null;
 let token1=null;
+let medicine_id=0;
 function getBaseURL() {
   return window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
       ? "http://127.0.0.1:8000/api"  // Local environment
       : "https://pharmacyabeer.shop/public/api"; // Live environment
 }
 var baseURL = getBaseURL();
-function viewProject(projectId) {
+function viewProject(medicine_id) {
      
 
     const xhr = new XMLHttpRequest();
-    const url = `${baseURL}/warehouse/medicine/${projectId}`;
+    const url = `${baseURL}/warehouse/medicine/${medicine_id}`;
     xhr.open('GET', url, true);
     xhr.setRequestHeader("Authorization", "Bearer " + token1)
     xhr.onreadystatechange = function () {
@@ -91,7 +92,7 @@ function viewProject(projectId) {
                       }
                        else{
                         document.getElementById("addmed").style.display = "block"
-                        document.getElementById("medDetialsh").style.display = "block"}
+                        document.getElementById("addmed").style.display = "block"}
                      
                   
                    
@@ -118,19 +119,21 @@ function deleteMedDetail(id) {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
                 console.log('Delete success:', response.message);
-                showAlert(null,response.message,response.status);
+                 document.getElementById("medDetials").style.display = "none";
+                 document.getElementById("addmed").style.display = "block";
+                // showAlert(null,response.message,response.status);
             } else {
-                const response = JSON.parse(xhr.responseText);
-                showAlert(response.errors ,response.message,response.status);
+                // const response = JSON.parse(xhr.responseText);
+                // showAlert(response.errors ,response.message,response.status);
                 // console.error('Delete error:', response.errors || response.message);
             }
         }
     };
     xhr.send();
   }
-  function showAlert(data, message, status) {
+function showAlert(data, message, status) {
     // Show the success message in the "success-message" div
-    const Message = document.getElementById('project');
+    const Message = document.getElementById('projDesc');
     const div = document.createElement('div');
     
     if (status) {
@@ -199,26 +202,19 @@ function deleteMedDetail(id) {
     });
   }
   // Call the displayProject function when the page loads
-  window.addEventListener('load', () => {
+window.addEventListener('load', () => {
     // Get the project ID from the query parameters (e.g., "?projectId=20")
     const urlParams = new URLSearchParams(window.location.search);
     const projectId = urlParams.get('projectId');
-
+    medicine_id=projectId
     let token=localStorage.getItem('token');
     let admin=JSON.parse(localStorage.getItem('Admin'));
     warehouse_id=admin.id;
     token1=String(token);
     // Call the function with the retrieved project ID
     if (projectId) {
-        viewProject(projectId);
-    } else {
-        let project_id=localStorage.getItem('id');
-        if(project_id){
-            console.log(project_id,'inside if statment');
-            displayProject(project_id);
-            localStorage.removeItem('id');
-        }
-
+        viewProject(medicine_id);
+    } 
         else{console.error("No projectId found in URL parameters.");}
-    }
+    
   });
