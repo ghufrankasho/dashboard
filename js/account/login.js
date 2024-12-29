@@ -1,4 +1,10 @@
 
+function getBaseURL() {
+  return window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+      ? "http://127.0.0.1:8000/api"  // Local environment
+      : "https://pharmacyabeer.shop/public"; // Live environment
+}
+
 // Function to handle form submission and AJAX request
 function submitSignUpForm(event) {
      event.preventDefault(); // Prevent default form submission
@@ -27,9 +33,9 @@ function submitSignUpForm(event) {
 
       };
     // Add your AJAX request here
-
+    var baseURL = getBaseURL();
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://127.0.0.1:8000/api/auth/register', true);
+    xhr.open('POST', `${baseURL}/auth/register`, true);
     xhr.setRequestHeader('Content-Type', 'application/json'); // Set the content type to JSON
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 201) {
@@ -81,8 +87,9 @@ function submitSignInForm(event) {
       };
     // Add your AJAX request here
 console.log(formData);
+var baseURL = getBaseURL();
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://127.0.0.1:8000/api/auth/login', true);
+    xhr.open('POST', `${baseURL}/auth/login`, true);
     xhr.setRequestHeader('Content-Type', 'application/json'); // Set the content type to JSON
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
