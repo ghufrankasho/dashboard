@@ -117,7 +117,7 @@ console.log(formData);
                 {
                   var response = JSON.parse(xhr.responseText);
 
-                
+                console.log(response)
                  showSuccessAlert(response.message,'',response.status,`signInForm`);
              
 } 
