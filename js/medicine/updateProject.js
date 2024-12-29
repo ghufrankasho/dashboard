@@ -1,133 +1,77 @@
 
 var project_id=0;
- 
+var warehouse_id=0; 
+var token1=0; 
 document.addEventListener('DOMContentLoaded', () => {
-  const nameInput = document.getElementById('nameInput');
-  const dateInput1 = document.getElementById('dateInput1');
-  const dateInput2 = document.getElementById('dateInput2');
-  const descInput = document.getElementById('desc');
-
-  nameInput.addEventListener('input', validateName);
-  dateInput1.addEventListener('input', validateDates);
-  dateInput2.addEventListener('input', validateDates);
-  descInput.addEventListener('input', validateDescription);
+    const nameInput = document.getElementById('nameInput');
+    const classInput = document.getElementById('classInput');
+  
+    nameInput.addEventListener('input', validateName);
+    classInput.addEventListener('input', validateClass);
+    let token=localStorage.getItem('token');
+    let admin=JSON.parse(localStorage.getItem('Admin'));
+    warehouse_id=admin.id;
+    token1=String(token);
 });
 
 function validateName() {
-  const nameInput = document.getElementById('nameInput');
-  const nameError = document.getElementById('nameError');
-  const value = nameInput.value.trim();
-
-  if (!value) {
-      nameInput.classList.add('error');
-      nameError.textContent = 'اسم المشروع مطلوب';
-  } else if (value.length > 100) {
-      nameInput.classList.add('error');
-      nameError.textContent = 'اسم المشروع لا يجب أن يتجاوز 100 أحرف';
-  } else {
-      nameInput.classList.remove('error');
-      nameError.textContent = '';
+    const nameInput = document.getElementById('nameInput');
+    const nameError = document.getElementById('nameError');
+    const value = nameInput.value.trim();
+  
+    if (!value) {
+        nameInput.classList.add('error');
+        nameError.textContent = 'اسم الداء مطلوب';
+    } else if (value.length > 100) {
+        nameInput.classList.add('error');
+        nameError.textContent = 'اسم الداء لا يجب أن يتجاوز 100 أحرف';
+    } else {
+        nameInput.classList.remove('error');
+        nameError.textContent = '';
+    }
   }
-}
+function validateClass() {
+      const nameInput = document.getElementById('classInput');
+      const nameError = document.getElementById('classError');
+      const value = nameInput.value.trim();
+    
+      if (!value) {
+          nameInput.classList.add('error');
+          nameError.textContent = 'اسم الداء مطلوب';
+      } else if (value.length > 200) {
+          nameInput.classList.add('error');
+          nameError.textContent = 'اسم الداء لا يجب أن يتجاوز 200 أحرف';
+      } else {
+          nameInput.classList.remove('error');
+          nameError.textContent = '';
+      }
+    }
 
-function validateDates() {
-  const dateInput1 = document.getElementById('dateInput1');
-  const dateInput2 = document.getElementById('dateInput2');
-  const dateError1 = document.getElementById('dateE');
-  const dateError2 = document.getElementById('dateError2');
-
-  const startDate = new Date(dateInput1.value);
-  const endDate = new Date(dateInput2.value);
-  const maxDate = new Date('2030-12-31');
-
-  if (!dateInput1.value) {
-      dateInput1.classList.add('error');
-      dateError1.textContent = 'تاريخ البداية مطلوب';
-  } else if (startDate > maxDate) {
-      dateInput1.classList.add('error');
-      dateError1.textContent = 'التاريخ لا يجب أن يتجاوز 2030';
-  } else {
-      dateInput1.classList.remove('error');
-      dateError1.textContent = '';
-  }
-
-  if (!dateInput2.value) {
-      dateInput2.classList.add('error');
-      dateError2.textContent = 'تاريخ النهاية مطلوب';
-  } else if (endDate < startDate) {
-      dateInput2.classList.add('error');
-      dateError2.textContent = 'تاريخ النهاية يجب أن يكون بعد تاريخ البداية';
-  } else if (endDate > maxDate) {
-      dateInput2.classList.add('error');
-      dateError2.textContent = 'التاريخ لا يجب أن يتجاوز 2030';
-  } else {
-      dateInput2.classList.remove('error');
-      dateError2.textContent = '';
-  }
-}
-
-function validateDescription() {
-  const descInput = document.getElementById('desc');
-  const descError = document.getElementById('descError');
-  const value = descInput.value.trim();
-
-  if (!value) {
-      descInput.classList.add('error');
-      descError.textContent = 'وصف المشروع مطلوب';
-  } else if (value.length > 2000) {
-      descInput.classList.add('error');
-      descError.textContent = 'وصف المشروع لا يجب أن يتجاوز 2000 حرف';
-  } else {
-      descInput.classList.remove('error');
-      descError.textContent = '';
-  }
-}
+ 
 
 let originalProject = {};
 
 function displayProject(projectId) {
-    const data = { id: projectId };
-    console.log("data inside", data);
-
+     
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://127.0.0.1:8000/api/project/show/', true);
-  
+    const url = `http://127.0.0.1:8000/api/warehouse/medicine/${projectId}`;
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader("Authorization", "Bearer " + token1);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 try {
                     const response = JSON.parse(xhr.responseText);
-                    document.getElementById('profile-pic').src = response.image;
-                    document.getElementById('nameInput').value = response.name;
-                    const select1 = document.getElementById('departments');
-                   
-                    response.departments.forEach(function(department) {
-                        var c1 = document.createElement("option");
-                        c1.text = department.name;
-                        c1.id = department.id;
-                        select1.options.add(c1, department.name);
-                    });
-                    const select = document.getElementById('types');
-                   
-                    response.types.forEach(function(type) {
-                        var c = document.createElement("option");
-                        c.text = type.name;
-                        c.id = type.id;
-                        select.options.add(c, type.name);
-                    });
-                    document.getElementById('dateInput1').value = response.start_date;
-                    document.getElementById('dateInput2').value = response.end_date;
-                    document.getElementById('desc').value = response.description;
-                    document.getElementById('fundrise').value = response.fundrise;
+                    document.getElementById('profile-pic').src = response.data.photo;
+                    document.getElementById('nameInput').value = response.data.name;
+                     
+                    document.getElementById('classInput').value = response.data.calssification;
+                  
                     // Store original values
                     originalProject = {
-                        name: response.name,
-                        department: select1.value,
-                        type: select.value,
-                        start_date: response.start_date,
-                        end_date: response.end_date,
-                        description: response.description,
-                        fundrise:response.fundrise,
+                        name: response.data.name,
+                        classification:response.data.calssification
+                         
                     };
                 } catch (e) {
                     console.error("Failed to parse response JSON:", e);
@@ -139,61 +83,40 @@ function displayProject(projectId) {
     };
   
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(data));
+    xhr.send();
 }
 
  
-function updateProject() {
+function updateMedicine() {
   const formData = new FormData();  
-  const deparElement = document.querySelector('#departments');
-  const department = deparElement.options[deparElement.selectedIndex].id;
-  const typeElement = document.querySelector('#types');
-  const type = typeElement.options[typeElement.selectedIndex].id;
-
+ 
   const currentProject = {
       name: document.getElementById('nameInput').value,
-      department: department,
-      type: type,
-      start_date: document.getElementById('dateInput1').value,
-      end_date: document.getElementById('dateInput2').value,
-      description: document.getElementById('desc').value,
-      fundrise:document.getElementById('fundrise').value,
+     
+      classification: document.getElementById('classInput').value,
+    
   };
 
   // Compare current values with original values and append only changed fields
   if (currentProject.name !== originalProject.name) {
       formData.append('name', currentProject.name);
   }
-  if (currentProject.department !== originalProject.department) {
-      formData.append('department_id', currentProject.department);
-  }
-  if (currentProject.type !== originalProject.type) {
-      formData.append('project_type_id', currentProject.type);
-  }
-  if (currentProject.start_date !== originalProject.start_date) {
-      formData.append('start_date', currentProject.start_date);
-  }
-  if (currentProject.end_date !== originalProject.end_date) {
-      formData.append('end_date', currentProject.end_date);
-  }
-  if (currentProject.description !== originalProject.description) {
-      formData.append('description', currentProject.description);
-  }
-  if (currentProject.fundrise !== originalProject.fundrise) {
-    formData.append('fundrise', currentProject.fundrise);
+  if (currentProject.classification !== originalProject.classification) {
+    formData.append('calssification', currentProject.classification);
 }
+ 
 
   // Check if a new image file has been selected
   const imageInput = document.getElementById('input-file');
   if ( imageInput !=null && imageInput.files.length > 0) {
-      formData.append('image', imageInput.files[0]);
+      formData.append('photo', imageInput.files[0]);
   }
 
   formData.append('id', project_id); // Always include the project ID
    console.log(...formData);
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://127.0.0.1:8000/api/project/update/', true);
-
+  xhr.open('POST', 'http://127.0.0.1:8000/api/warehouse/medicine/', true);
+  xhr.setRequestHeader("Authorization", "Bearer " + token1);
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
           if (xhr.status === 200) {
@@ -295,6 +218,6 @@ function showAlert(data, message, status) {
   
       // Remove the message container from the DOM
       div.remove();
-      if(status)window.location.href =`/project/proj.html`;
+      if(status)window.location.href =`/medicine/proj.html`;
     });
   }

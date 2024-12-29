@@ -36,10 +36,9 @@
 			fetch('nav.html')
 				.then(response => response.text())
 				.then(text => {document.getElementById('nav-placeholder').innerHTML = text;
-			let admin=	 JSON.parse(localStorage.getItem('Admin'));
-			console.log(admin);
-			let img=document.getElementById("admin-img");
-			img.src=admin.image;
+				
+         
+		    	 
 			const switchMode = document.getElementById('switch-mode');
 
 			switchMode.addEventListener('change', function () {
@@ -85,20 +84,19 @@
 						<p>الطلبات الحديثة </p>
 					</span>
 				</li>
-				<li>
-					<i class='bx bxs-group' ></i>
-					<span class="text">
-						<h3 id="orphen_num"></h3>
-						<p>الأيتام
-
-						</p>
-					</span>
-				</li>
+			 
 				<li>
 					<i class='bx bxs-dollar-circle' ></i>
 					<span class="text">
-						<h3 id="donation_num"> </h3>
-						<p>إجمالي التبرعات </p>
+						<h3 id="total_num"> </h3>
+						<p>إجمالي الطلبات </p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+					<span class="text">
+						<h3 id="medicine_num"></h3>
+						<p> الادوية </p>
 					</span>
 				</li>
 			</ul>
@@ -124,19 +122,37 @@
 						</tbody>
 					</table>
 				</div>
-
-				<div class="todo">
+				<div class="order">
 					<div class="head">
-						<h3>المشاريع</h3>
-						<a href="/project/addproj.html">	<i class='bx bx-plus' ></i></a>
+						<h3> الادوية</h3>
+					 
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th></th>
+								<th>الاسم  </th>
+								<th>التصنيف </th>
+							</tr>
+						</thead>
+						<tbody id="medicines">
+						 
+						 
+						</tbody>
+					</table>
+				</div>
+				<!-- <div class="todo">
+					<div class="head">
+						<h3>الادوية</h3>
+						<a href="/medicine/addMedicine.html">	<i class='bx bx-plus' ></i></a>
 					
 						 
 					</div>
-					<ul class="todo-list" id="projects">
+					<ul class="todo-list" id="medicines">
 
 						 
 					</ul>
-				</div>
+				</div> -->
 			</div>
 		</main>
 		<!-- MAIN -->

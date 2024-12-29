@@ -1,6 +1,10 @@
+let Admin=null;
+let token1=null;
 function displayProjects() {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', 'http://127.0.0.1:8000/api/project/get', true);
+  const url = `http://127.0.0.1:8000/api/warehouse/?id=${Admin.id}`;
+  xhr.open('GET', url, true);
+  xhr.setRequestHeader("Authorization", "Bearer " + token1);
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
           if (xhr.status === 200) {
@@ -10,18 +14,16 @@ function displayProjects() {
               // Clear existing projects
               projectContainer.innerHTML = '';
               
-              projects.forEach(function(project) {
+             if(projects.data.medicines.length!==0){ projects.data.medicines.forEach(function(project) {
                   const projectDiv = document.createElement('div');
                   projectDiv.className = 'box';
                   projectDiv.innerHTML = `
-                      <img src="${project.image}" alt="">
+                      <img src="${project.photo}" alt="">
                       <div class="content">
                           <h3>${project.name}</h3>
                          
-                          <p>${project.description}</p>
-                          <div class="progress-bar">
-                              <div class="progress-per" per="${project.prograss}%" style="max-width:${project.prograss}%"></div>
-                          </div>
+                          <p>${project.calssification}</p>
+                           
                           <div class="info">
                            
                           <a href="#">
@@ -50,7 +52,7 @@ function displayProjects() {
                   const deleteButton = document.getElementById(`delete-${project.id}`);
                   deleteButton.addEventListener('click', function() {
                       
-                      if(window.confirm("هل متأكد من أنك تريد حذف هذا المشروع؟"))
+                      if(window.confirm("هل متأكد من أنك تريد حذف هذا الدواء؟"))
                         {deleteProject(project.id);}
                   });
                   // Create a update button and add an event listener
@@ -87,20 +89,21 @@ function displayProjects() {
         
         
                   });
-              });
+              });}
           } else {
               console.error('Error fetching projects:', xhr.statusText);
           }
       }
   };
   xhr.send();
+  xhr.setRequestHeader("Route-Name", "warehouse_medicines");
 }
 
 function deleteProject(id) {
   const data = JSON.stringify({ "id": id });  // Ensure id is an integer
   const xhr = new XMLHttpRequest();
-  xhr.open('DELETE', `http://127.0.0.1:8000/api/project/delete/${id}`, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.open('DELETE', `http://127.0.0.1:8000/api/warehouse/medicine/${id}`, true);
+  xhr.setRequestHeader("Authorization", "Bearer " + token1);
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
           if (xhr.status === 200) {
@@ -299,4 +302,15 @@ function showAlert(data, message, status) {
     div.remove();
   });
 }
-window.addEventListener('load', displayProjects);
+window.addEventListener('load', () => {
+
+  let token=localStorage.getItem('token');
+  let admin=JSON.parse(localStorage.getItem('Admin'));
+  Admin=admin;
+  token1=String(token);
+  
+   
+  
+   displayProjects();
+
+});
