@@ -52,7 +52,7 @@ function submitSignUpForm(event) {
           
              
           
-             window.location.href =`${path}/index.html`;
+            //  window.location.href =`${path}/index.html`;
             
            
               
@@ -107,9 +107,9 @@ console.log(formData);
           localStorage.setItem('Admin', JSON.stringify(response.user));
          
           localStorage.setItem('token', response.token);
-        
+        console.log(`${path}/index.html`);
           
-        window.location.href =`${path}/index.html`;
+        // window.location.href =`${path}/index.html`;
          
         }
         else {
