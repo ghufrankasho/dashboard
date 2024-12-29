@@ -1,8 +1,14 @@
 let Admin=null;
 let token1=null;
+function getBaseURL() {
+  return window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+      ? "http://127.0.0.1:8000/api"  // Local environment
+      : "https://pharmacyabeer.shop/public/api"; // Live environment
+}
+var baseURL = getBaseURL();
 function displayProjects() {
   const xhr = new XMLHttpRequest();
-  const url = `http://127.0.0.1:8000/api/warehouse/?id=${Admin.id}`;
+  const url = `${baseURL}/warehouse/?id=${Admin.id}`;
   xhr.open('GET', url, true);
   xhr.setRequestHeader("Authorization", "Bearer " + token1);
   xhr.onreadystatechange = function () {
@@ -102,7 +108,7 @@ function displayProjects() {
 function deleteProject(id) {
   const data = JSON.stringify({ "id": id });  // Ensure id is an integer
   const xhr = new XMLHttpRequest();
-  xhr.open('DELETE', `http://127.0.0.1:8000/api/warehouse/medicine/${id}`, true);
+  xhr.open('DELETE', `${baseURL}/warehouse/medicine/${id}`, true);
   xhr.setRequestHeader("Authorization", "Bearer " + token1);
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
@@ -127,7 +133,7 @@ function searchproject(input) {
 
 
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://127.0.0.1:8000/api/project/search/', true);
+  xhr.open('POST', `${baseURL}/project/search/`, true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.onreadystatechange = function () {
 

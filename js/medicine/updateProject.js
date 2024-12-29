@@ -2,6 +2,12 @@
 var project_id=0;
 var warehouse_id=0; 
 var token1=0; 
+function getBaseURL() {
+  return window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+      ? "http://127.0.0.1:8000/api"  // Local environment
+      : "https://pharmacyabeer.shop/public/api"; // Live environment
+}
+var baseURL = getBaseURL();
 document.addEventListener('DOMContentLoaded', () => {
     const nameInput = document.getElementById('nameInput');
     const classInput = document.getElementById('classInput');
@@ -54,7 +60,7 @@ let originalProject = {};
 function displayProject(projectId) {
      
     const xhr = new XMLHttpRequest();
-    const url = `http://127.0.0.1:8000/api/warehouse/medicine/${projectId}`;
+    const url = `${baseURL}/warehouse/medicine/${projectId}`;
     xhr.open('GET', url, true);
     xhr.setRequestHeader("Authorization", "Bearer " + token1);
     xhr.onreadystatechange = function () {
@@ -115,7 +121,7 @@ function updateMedicine() {
   formData.append('id', project_id); // Always include the project ID
    console.log(...formData);
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://127.0.0.1:8000/api/warehouse/medicine/', true);
+  xhr.open('POST', `${baseURL}/warehouse/medicine/`, true);
   xhr.setRequestHeader("Authorization", "Bearer " + token1);
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {

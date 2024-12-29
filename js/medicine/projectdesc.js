@@ -1,11 +1,17 @@
 
 let warehouse_id=null;
 let token1=null;
+function getBaseURL() {
+  return window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+      ? "http://127.0.0.1:8000/api"  // Local environment
+      : "https://pharmacyabeer.shop/public/api"; // Live environment
+}
+var baseURL = getBaseURL();
 function viewProject(projectId) {
      
 
     const xhr = new XMLHttpRequest();
-    const url = `http://127.0.0.1:8000/api/warehouse/medicine/${projectId}`;
+    const url = `${baseURL}/warehouse/medicine/${projectId}`;
     xhr.open('GET', url, true);
     xhr.setRequestHeader("Authorization", "Bearer " + token1)
     xhr.onreadystatechange = function () {
@@ -105,7 +111,7 @@ function viewProject(projectId) {
 function deleteMedDetail(id) {
 
     const xhr = new XMLHttpRequest();
-    xhr.open('DELETE', `http://127.0.0.1:8000/api/warehouse/medicineDetials/${id}`, true);
+    xhr.open('DELETE', `${baseURL}/warehouse/medicineDetials/${id}`, true);
     xhr.setRequestHeader("Authorization", "Bearer " + token1);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {

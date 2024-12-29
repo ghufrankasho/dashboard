@@ -1,7 +1,12 @@
 
 let medicine_id=null;
 let token1=null;
- 
+function getBaseURL() {
+  return window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+      ? "http://127.0.0.1:8000/api"  // Local environment
+      : "https://pharmacyabeer.shop/public/api"; // Live environment
+}
+var baseURL = getBaseURL();
 document.addEventListener('DOMContentLoaded', () => {
   const nameInput = document.getElementById('nameInput');
  
@@ -142,7 +147,7 @@ function addMedicineDetail() {
   
 console.log(...formData);
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://127.0.0.1:8000/api/warehouse/medicineDetials/add/', true);
+  xhr.open('POST', `${baseURL}/warehouse/medicineDetials/add/`, true);
   xhr.setRequestHeader("Authorization", "Bearer " + token1);
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
