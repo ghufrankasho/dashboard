@@ -3,7 +3,7 @@ let token1=null;
 function getBaseURL() {
   return window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
       ? "http://127.0.0.1:8000/api"  // Local environment
-      : "https://pharmacyabeer.shop/public/api"; // Live environment
+      : "https://pharmacyabeer.shop/backend/public/api"; // Live environment
 }
 var baseURL = getBaseURL();
 function displayProjects() {
