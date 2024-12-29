@@ -48,11 +48,11 @@ function submitSignUpForm(event) {
             // Handle successful response
             var response = JSON.parse(xhr.responseText);
          
-            console.log(response);
+            console.log(response,"path=",path);
           
              
           
-            //  window.location.href =`${path}/index.html`;
+             window.location.href =`${path}/index.html`;
             
            
               
@@ -107,9 +107,9 @@ console.log(formData);
           localStorage.setItem('Admin', JSON.stringify(response.user));
          
           localStorage.setItem('token', response.token);
-        console.log(`${path}/index.html`);
+        console.log("path",path);
           
-        // window.location.href =`${path}/index.html`;
+        window.location.href =`${path}/index.html`;
          
         }
         else {
