@@ -4,7 +4,13 @@ function getBaseURL() {
       ? "http://127.0.0.1:8000/api"  // Local environment
       : "https://pharmacyabeer.shop/public/api"; // Live environment
 }
+function getPathURL() {
+  return window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+      ? ""  // Local environment
+      : "/public/dashboard"; // Live environment
+}
 var baseURL = getBaseURL();
+var path=getPathURL();
 // Function to handle form submission and AJAX request
 function submitSignUpForm(event) {
      event.preventDefault(); // Prevent default form submission
@@ -46,7 +52,7 @@ function submitSignUpForm(event) {
           
              
           
-             window.location.href =`/index.html`;
+             window.location.href =`${path}/index.html`;
             
            
               
@@ -103,15 +109,15 @@ console.log(formData);
           localStorage.setItem('token', response.token);
         
           
-        //  window.location.href =`/index.html`;
+        window.location.href =`${path}/index.html`;
          
         }
         else {
-            if((xhr.readyState === 4 && xhr.status === 401 ) )
+            if((xhr.readyState === 4 && xhr.status === 400 ) )
                 {
                   var response = JSON.parse(xhr.responseText);
 
-                console.log(response);
+                
                  showSuccessAlert(response.message,'',response.status,`signInForm`);
              
 } 
@@ -140,7 +146,7 @@ function resetPassword(event) {
   // Add your AJAX request here
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://127.0.0.1:8000/api/warehouse/reset_password', true);
+  xhr.open('POST', `${baseURL}/api/warehouse/reset_password`, true);
   xhr.setRequestHeader('Content-Type', 'application/json'); // Set the content type to JSON
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -150,19 +156,8 @@ function resetPassword(event) {
           
           showSuccessAlert(null,response.message,true,'reset-password');
          console.log(response.account.type,response);
-          if (response.account.type=="0"){
-            console.log(response.message)
-            if(window.confirm(response.message))
-              {             window.location.href =`/index.html`;}
-            // window.location.href =`/messages/userindex.html`;
-
-           }
-          if (response.account.type=="2"){
-            
-            // window.location.href =`/employee/employeeindex.html`;
-            window.location.href =`/employee/employees.html`;
-           }
-          // else{window.location.href =`/index.html`;}
+           
+           window.location.href =`${path}/index.html`;
           
           // Handle response as needed
       } else {
