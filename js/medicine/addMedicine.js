@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
   classInput.addEventListener('input', validateClass);
   let token=localStorage.getItem('token');
   let admin=JSON.parse(localStorage.getItem('Admin'));
-  warehouse_id=admin.id;
+  warehouse_id=(admin.id);
+  console.log(typeof(admin.id))
   token1=String(token);
    
 });
@@ -27,10 +28,10 @@ function validateName() {
 
   if (!value) {
       nameInput.classList.add('error');
-      nameError.textContent = 'اسم الداء مطلوب';
+      nameError.textContent = 'اسم الداوء مطلوب';
   } else if (value.length > 100) {
       nameInput.classList.add('error');
-      nameError.textContent = 'اسم الداء لا يجب أن يتجاوز 100 أحرف';
+      nameError.textContent = 'اسم الداوء لا يجب أن يتجاوز 100 أحرف';
   } else {
       nameInput.classList.remove('error');
       nameError.textContent = '';
@@ -43,10 +44,10 @@ function validateClass() {
   
     if (!value) {
         nameInput.classList.add('error');
-        nameError.textContent = 'اسم الداء مطلوب';
+        nameError.textContent = 'اسم الداوء مطلوب';
     } else if (value.length > 200) {
         nameInput.classList.add('error');
-        nameError.textContent = 'اسم الداء لا يجب أن يتجاوز 200 أحرف';
+        nameError.textContent = 'اسم الداوء لا يجب أن يتجاوز 200 أحرف';
     } else {
         nameInput.classList.remove('error');
         nameError.textContent = '';
