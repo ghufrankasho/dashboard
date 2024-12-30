@@ -82,10 +82,10 @@ function viewProject(medicine_id) {
 
                   updateButton.addEventListener('click',  () => {
                 
-                    const projectId = project.id;
+                    const projectId = response.data.medicinedetials.id;
                      
                     // console.log(projectId)
-                    window.location.href =`updateproj.html?projectId=${projectId}`;
+                   window.location.href =`updateDetails.html?projectId=${projectId}`;
                     
                   });
                              
@@ -124,7 +124,7 @@ function deleteMedDetail(id) {
                 // showAlert(null,response.message,response.status);
             } else {
                 // const response = JSON.parse(xhr.responseText);
-                // showAlert(response.errors ,response.message,response.status);
+                 showAlert(response.errors ,response.message,response.status);
                 // console.error('Delete error:', response.errors || response.message);
             }
         }

@@ -52,7 +52,7 @@ function submitSignUpForm(event) {
           
              
           
-             window.location.href =`${path}/index.html`;
+             window.location.href =`${path}/home.html`;
             
            
               
@@ -109,7 +109,7 @@ console.log(formData);
           localStorage.setItem('token', response.token);
         console.log("path",path);
           
-        window.location.href =`${path}/index.html`;
+        window.location.href =`${path}/home.html`;
          
         }
         else {
@@ -157,7 +157,7 @@ function resetPassword(event) {
           showSuccessAlert(null,response.message,true,'reset-password');
          console.log(response.account.type,response);
            
-           window.location.href =`${path}/index.html`;
+           window.location.href =`${path}/home.html`;
           
           // Handle response as needed
       } else {
