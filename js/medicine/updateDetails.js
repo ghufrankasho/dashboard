@@ -128,7 +128,7 @@ function displayMedDetial(projectId) {
                   
                     // Store original values
                     originalProject = {
-                        name: response.data.name,
+                        component: response.data.component,
                         price:response.data.price,
                         quantity: response.data.quantity,
                         expire_date:response.data.expire_date
@@ -152,7 +152,7 @@ function updateMedicineDetail() {
   const formData = new FormData();  
   const currentProject = {
 
-      name: document.getElementById('nameInput').value,
+      component: document.getElementById('nameInput').value,
       price: document.getElementById('priceInput').value,
       quantity: document.getElementById('quantityInput').value,
       expire_date: document.getElementById('dateInput1').value,
@@ -160,8 +160,8 @@ function updateMedicineDetail() {
   };
 
   // Compare current values with original values and append only changed fields
-  if (currentProject.name !== originalProject.name) {
-      formData.append('name', currentProject.name);
+  if (currentProject.component !== originalProject.component) {
+      formData.append('component', currentProject.component);
   }
   if (currentProject.price !== originalProject.price) {
     formData.append('price', currentProject.price);

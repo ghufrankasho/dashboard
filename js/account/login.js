@@ -173,6 +173,43 @@ function resetPassword(event) {
   xhr.setRequestHeader( "warehouseorization", "Bearer " + token );
   xhr.send(JSON.stringify(formData)); // Send the form data as JSON
 }
+function logout(){
+  let token=localStorage.getItem('token');
+  
+  token1=String(token);
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', `${baseURL}/auth/logout`, true);
+  xhr.setRequestHeader("Authorization", "Bearer " + token1);
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          // Handle successful response
+          var response = JSON.parse(xhr.responseText);
+       
+           
+        
+           
+        
+           window.location.href =`/index.html`;
+          
+         
+            
+      } 
+      else {
+        
+        if((xhr.readyState === 4 && xhr.status === 400) )
+                {var response = JSON.parse(xhr.responseText);
+
+                // Handle errors or other states
+                d=JSON.stringify(response.errors);
+                
+                 console.log(d);
+            }
+        else{ 
+          showSuccessAlert('Error occurred during login .',response,null);
+        }
+      }
+  };
+}
 function showSuccessAlert(data, message, status,form) {
     // Show the success message in the "success-message" div
     const Message = document.getElementById(form);

@@ -64,7 +64,7 @@ function displayrequest() {
                  requesttr.id='tra';
                   requesttr.innerHTML = `
                       <td>
-                      <a href="#"> <img src="${request.photo}" ></a>
+                      <a href="medicine/projDesc.html?projectId=${request.id}"> <img src="${request.photo}" ></a>
                       <p id='name-${request.id}'></p>
                       </td>
                       <td>${request.name}</td>

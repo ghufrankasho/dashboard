@@ -133,8 +133,9 @@ function searchproject(input) {
 
 
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', `${baseURL}/project/search/`, true);
+  xhr.open('POST', `${baseURL}/warehouse/medicine/search/`, true);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader("Authorization", "Bearer " + token1);
   xhr.onreadystatechange = function () {
 
     if (xhr.readyState === 4) {
@@ -144,18 +145,16 @@ function searchproject(input) {
         const projectContainer = document.getElementById('projects');
         projectContainer.innerHTML = '';
        
-        projects.forEach(function (project) {
+        projects.data.forEach(function (project) {
           const projectDiv = document.createElement('div');
                   projectDiv.className = 'box';
                   projectDiv.innerHTML = `
-                      <img src="${project.image}" alt="">
+                      <img src="${project.photo}" alt="">
                       <div class="content">
                           <h3>${project.name}</h3>
                          
-                          <p>${project.description}</p>
-                          <div class="progress-bar">
-                              <div class="progress-per" per="${project.prograss}%" style="max-width:${project.prograss}%"></div>
-                          </div>
+                          <p>${project.calssification}</p>
+                          
                           <div class="info">
                            
                           <a href="#">
@@ -164,8 +163,8 @@ function searchproject(input) {
                           <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                           </svg>
                          </a>
-                         <a href="projDesc.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                         <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg"  id="view-${project.id}" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                           <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
                           <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
                           </svg>
@@ -182,8 +181,8 @@ function searchproject(input) {
 
           const deleteButton = document.getElementById(`delete-${project.id}`);
           deleteButton.addEventListener('click', function () {
-            if (window.confirm("هل متأكد من أنك تريد حذف هذا الموظف بحذفه سيتم طرده؟")) { deleteproject(project.id); }
-          });
+            if(window.confirm("هل متأكد من أنك تريد حذف هذا الدواء؟"))
+              {deleteProject(project.id);}});
          
            
           /// Create a update button and add an event listener
@@ -199,14 +198,13 @@ function searchproject(input) {
             
           });
           const viewButton = document.getElementById(`view-${project.id}`);
-                  
-
+        
           viewButton.addEventListener('click',  () => {
         
-            const projectId = project.id;
-             
-            viewProject(projectId)
-            // window.location.href =`projDesc.html?projectId=${projectId}`;
+           console.log(project.id);
+                     
+                 
+             window.location.href =`projDesc.html?projectId=${project.id}`;
             
           });
 
