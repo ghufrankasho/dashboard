@@ -129,7 +129,7 @@ function resetPassword(event) {
   var old_password = document.getElementById('old_password').value;
   var password_confirmation = document.getElementById('confirmed_password').value;
   let token=localStorage.getItem('token');
-  
+   
 
   var formData = {
     old_password: old_password,
@@ -142,7 +142,7 @@ function resetPassword(event) {
   // Add your AJAX request here
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', `${baseURL}/api/warehouse/reset_password`, true);
+  xhr.open('POST', `${baseURL}/warehouse/reset_password`, true);
   xhr.setRequestHeader('Content-Type', 'application/json'); // Set the content type to JSON
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -153,7 +153,7 @@ function resetPassword(event) {
           showSuccessAlert(null,response.message,true,'reset-password');
          console.log(response.account.type,response);
            
-           window.location.href =`/home.html`;
+           window.location.href =`/index.html`;
           
           // Handle response as needed
       } else {

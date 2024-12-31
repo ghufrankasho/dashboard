@@ -1,0 +1,354 @@
+<!--Website: wwww.codingdung.com-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Profile</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/all.min.css" />
+    <link rel="stylesheet" href="/css/alert.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+    .d-flex {
+        display: flex !important;
+        justify-content: space-evenly;
+        align-items: stretch;
+    }
+</style>
+
+<body>
+    <div class="prof">
+        <div class="container light-style flex-grow-1 container-p-y">
+            <h4 class="font-weight-bold py-3 mb-4 text-right">
+                إعدادات الحساب
+            </h4>
+            <div class="card overflow-hidden">
+                <div class="row no-gutters row-bordered row-border-light">
+
+                    <div class="col-md-9">
+                        <div class="tab-content" id="form">
+                            <div class="tab-pane fade active show " id="account-general">
+                         
+                                <hr class="border-light m-0">
+                                <div class="card-body text-right"  dir="rtl">
+                                    <div class="form-group">
+                                        <label class="form-label">الاسم </label>
+                                        <input type="text" class="form-control mb-1" id="user-name">
+                                        <span id="nameError" class="error-message"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">العنوان</label>
+                                        <input type="text" class="form-control" id="user-address" >
+                                        <span id="addressError" class="error-message"></span>
+                                    </div>
+                                    <div class="form-group" >
+                                        <label class="form-label">رقم الهاتف</label>
+                                        <input type="text" class="form-control mb-1" id="user-phone">
+                                        <span id="phoneError" class="error-message"></span>
+                                     
+                                    </div>
+                                   
+
+
+                                    
+
+                                       
+                               
+                                    
+                                    
+                                </div>
+
+                                <div class=" text-left  m-3">
+                                    <button type="button" id="save-btn" class="btn btn-info">حفظ</button>&nbsp;
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="tab-pane fade text-right" id="reset-password" dir="rtl">
+                                <div class="card-body pb-2">
+
+                                    <div class="form-group">
+                                        <label class="form-label">كلمة المرور الحالية</label>
+                                        <input type="password" class="form-control" id="old_password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">كلمة المرور الجديدة </label>
+                                        <input type="password" class="form-control" id="new_password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">أعد كتابة كلمة المرور</label>
+                                        <input type="password" class="form-control" id="confirmed_password">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-info" onclick="resetPassword(event)">حفظ
+                                        </button>&nbsp;
+                                    </div>
+
+                                    
+
+
+                                </div>
+                            </div>
+
+                          
+
+ 
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-3 pt-0" dir="rtl" >
+                        <div class="list-group list-group-flush account-settings-links" dir="rtl">
+                            <a style="text-align: right;" class="list-group-item list-group-item-action active"
+                                data-toggle="list" href="#account-general">الصفحة الشخصية</a>
+                            <a style="text-align: right;" class="list-group-item list-group-item-action"
+                                data-toggle="list" href="#reset-password">تغيير كلمة السر </a>
+                                <a style="text-align: right; display: none;" id="projects-item"  class="list-group-item list-group-item-action" data-toggle="list"
+                                href="#account-info">المشاريع</a>
+                                
+
+                           
+                         
+                            <a style="text-align: right;" class="list-group-item list-group-item-action"
+                                href="index.html">تسجيل خروج </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/account/login.js"></script>
+    <script>
+       
+        
+        document.addEventListener('DOMContentLoaded', function () {
+
+           // let support = JSON.parse(localStorage.getItem('support')); // Parse the stringified JSON
+           var baseURL = getBaseURL();
+           let user = JSON.parse(localStorage.getItem('Admin')); 
+           
+           console.log(user);
+
+           const nameInput = document.getElementById('user-name');
+           const address = document.getElementById('user-address');
+           const phone = document.getElementById('user-phone');
+            
+         
+           nameInput.addEventListener('input', validateName);
+           address.addEventListener('input', validateAddress);
+           phone.addEventListener('input', validatePhone);
+         
+            let original_data = {};
+            document.getElementById('user-name').value=user.name;
+            document.getElementById('user-address').value=user.address;
+            document.getElementById('user-phone').value=user.phone;
+            original_data = {
+                name: user.name,
+                address: user.address,
+                phone: user.mobile
+                };
+            const saveButton = document.getElementById('save-btn');
+            saveButton.onclick = function(){
+                update_user(original_data,user.id);
+                }
+                 
+            });
+          
+         function getBaseURL() {
+              return window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+                ? "http://127.0.0.1:8000/api"  // Local environment
+                : "https://pharmacyabeer.shop/backend/public/api"; // Live environment
+            }
+         
+        function update_user(original_data,id) {
+            const formData = new FormData();  
+            let token1 = localStorage.getItem('token');
+            const current = {
+                name: document.getElementById('user-name').value,
+                
+                phone: document.getElementById('user-phone').value,
+                
+                address: document.getElementById('user-address').value
+            };
+           console.log(original_data,"inside update function");
+            // Compare current values with original values and append only changed fields
+            if (current.name !== original_data.name) {
+                formData.append('name', current.name);
+            }
+           
+            if (current.phone !== original_data.phone) {
+                formData.append('phone', current.phone);
+            }
+            if (current.address !== original_data.address) {
+                formData.append('address', current.address);
+            }
+          
+             
+            formData.append('id',id); // Always include the  ID
+            console.log(...formData);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `${baseURL}/warehouse/`, true);
+            xhr.setRequestHeader("Authorization", "Bearer " + token1);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                       
+                        const response = JSON.parse(xhr.responseText);
+                        
+                      //   console.log('Update success:', response.message);
+                        showAlert(null, response.message, response.status);
+                        
+                      
+                    } else {
+                        const response = JSON.parse(xhr.responseText);
+                        showAlert(null, response.message, response.status);
+                      //   console.error('Update error:', response.errors || response.message);
+                    }
+                }
+            };
+          
+            xhr.send(formData);
+        }
+        function showAlert(data, message, status) {
+            // Show the success message in the "success-message" div
+            const Message = document.getElementById('form');
+            const div = document.createElement('div');
+            console.log(data)
+            if (status) {
+              div.className = "success alert d-none mt-3 mx-auto"
+              div.innerHTML = ` 
+            <div class="content-message-alert" id ="AlertMessage">
+              <div class="icon">
+                <svg width="50" height="50" id="Layer_1" style="enable-background:new 0 0 128 128;" version="1.1" viewBox="0 0 128 128" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><circle fill="#fff" cx="64" cy="64" r="64"/></g><g><path fill="#3EBD61" d="M54.3,97.2L24.8,67.7c-0.4-0.4-0.4-1,0-1.4l8.5-8.5c0.4-0.4,1-0.4,1.4,0L55,78.1l38.2-38.2   c0.4-0.4,1-0.4,1.4,0l8.5,8.5c0.4,0.4,0.4,1,0,1.4L55.7,97.2C55.3,97.6,54.7,97.6,54.3,97.2z"/></g></svg>
+              </div>
+              
+            <p  height="80px";>${message}</p>
+            
+          
+          </div>
+          <button class="close"  id="AlertButton">
+          <svg height="18px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="18px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="#69727D" d="M437.5,386.6L306.9,256l130.6-130.6c14.1-14.1,14.1-36.8,0-50.9c-14.1-14.1-36.8-14.1-50.9,0L256,205.1L125.4,74.5  c-14.1-14.1-36.8-14.1-50.9,0c-14.1,14.1-14.1,36.8,0,50.9L205.1,256L74.5,386.6c-14.1,14.1-14.1,36.8,0,50.9  c14.1,14.1,36.8,14.1,50.9,0L256,306.9l130.6,130.6c14.1,14.1,36.8,14.1,50.9,0C451.5,423.4,451.5,400.6,437.5,386.6z"/></svg>
+          </button>
+          `
+            }
+            if (!status) {
+              div.className = "warning alert d-none mt-3 mx-auto"
+              div.innerHTML = ` 
+            
+            <div class="content-message-alert" id ="AlertMessage">
+              <div class="icon">
+                <svg height="50" viewBox="0 0 512 512" width="50" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M449.07,399.08,278.64,82.58c-12.08-22.44-44.26-22.44-56.35,0L51.87,399.08A32,32,0,0,0,80,446.25H420.89A32,32,0,0,0,449.07,399.08Zm-198.6-1.83a20,20,0,1,1,20-20A20,20,0,0,1,250.47,397.25ZM272.19,196.1l-5.74,122a16,16,0,0,1-32,0l-5.74-121.95v0a21.73,21.73,0,0,1,21.5-22.69h.21a21.74,21.74,0,0,1,21.73,22.7Z"/></svg>
+            </div>
+               
+            <p height="100px"> ${message} </p>
+            <p height="100px"> ${JSON.stringify(data)} </p>
+           
+            </div>
+            <button class="close" id="AlertButton">
+             <svg height="18px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="18px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="#69727D" d="M437.5,386.6L306.9,256l130.6-130.6c14.1-14.1,14.1-36.8,0-50.9c-14.1-14.1-36.8-14.1-50.9,0L256,205.1L125.4,74.5  c-14.1-14.1-36.8-14.1-50.9,0c-14.1,14.1-14.1,36.8,0,50.9L205.1,256L74.5,386.6c-14.1,14.1-14.1,36.8,0,50.9  c14.1,14.1,36.8,14.1,50.9,0L256,306.9l130.6,130.6c14.1,14.1,36.8,14.1,50.9,0C451.5,423.4,451.5,400.6,437.5,386.6z"/></svg>
+            </button>
+          </div>
+          
+          `
+            }
+            if (status == null) {
+              div.className = "danger alert d-none mt-3 mx-auto"
+              div.innerHTML = ` 
+            
+            <div class="content-message-alert" id ="AlertMessage">
+              <div class="icon">
+              <svg height="50" viewBox="0 0 512 512" width="50" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M449.07,399.08,278.64,82.58c-12.08-22.44-44.26-22.44-56.35,0L51.87,399.08A32,32,0,0,0,80,446.25H420.89A32,32,0,0,0,449.07,399.08Zm-198.6-1.83a20,20,0,1,1,20-20A20,20,0,0,1,250.47,397.25ZM272.19,196.1l-5.74,122a16,16,0,0,1-32,0l-5.74-121.95v0a21.73,21.73,0,0,1,21.5-22.69h.21a21.74,21.74,0,0,1,21.73,22.7Z"/></svg>
+              </div>
+              <p height="100px"> ${message} </p>
+              </div>
+              <button class="close" id="AlertButton">
+               <svg height="18px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="18px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="#69727D" d="M437.5,386.6L306.9,256l130.6-130.6c14.1-14.1,14.1-36.8,0-50.9c-14.1-14.1-36.8-14.1-50.9,0L256,205.1L125.4,74.5  c-14.1-14.1-36.8-14.1-50.9,0c-14.1,14.1-14.1,36.8,0,50.9L205.1,256L74.5,386.6c-14.1,14.1-14.1,36.8,0,50.9  c14.1,14.1,36.8,14.1,50.9,0L256,306.9l130.6,130.6c14.1,14.1,36.8,14.1,50.9,0C451.5,423.4,451.5,400.6,437.5,386.6z"/></svg>
+              </button>
+          </div>
+          
+          `
+            }
+            Message.appendChild(div);
+            div.classList.remove('d-none');
+            const alertButton = document.getElementById('AlertButton');
+            alertButton.addEventListener('click', () => {
+              // Get the message container
+          
+          
+              // Remove the message container from the DOM
+              <!-- div.remove(); -->
+            if(status) window.location.href =`/index.html`;
+            });
+          }
+        function validateName() {
+            const nameInput = document.getElementById('user-name');
+            const nameError = document.getElementById('nameError');
+            const value = nameInput.value.trim();
+          
+            if (!value) {
+                nameInput.classList.add('error');
+                nameError.textContent = 'الاسم مطلوب';
+            } else if (value.length > 100) {
+                nameInput.classList.add('error');
+                nameError.textContent = 'الاسم  لا يجب أن يتجاوز 100 حرف';
+            } else {
+                nameInput.classList.remove('error');
+                nameError.textContent = '';
+            }
+          }
+        function validateAddress() {
+          const address = document.getElementById('user-address');
+            const addressError = document.getElementById('addressError');
+            const value = address.value.trim();
+          
+            if (!value) {
+              address.classList.add('error');
+              addressError.textContent = 'العنوان  مطلوب';
+            } else if (value.length > 200) {
+              address.classList.add('error');
+              addressError.textContent = 'العنوان  لا يجب أن يتجاوز 200 حرف';
+            } else {
+              address.classList.remove('error');
+                addressError.textContent = '';
+            }
+        }
+        function validatePhone() {
+            const phone = document.getElementById('user-phone');
+              const phoneError = document.getElementById('phoneError');
+              const value = phone.value.trim();
+              // const pattern1 =/^\0963\d{3}\d{3}\d{3}$/;
+              const pattern =/^09\d{2}\d{3}\d{3}$/;
+              // Validate phone number and update message
+             
+              if (!value) {
+                phone.classList.add('error');
+                phoneError.textContent = 'رقم الهاتف  الخاص بالمستخدم مطلوب';
+              } else 
+             { const isValid = pattern.test(value);
+               if (!isValid) {
+                phone.classList.add('error');
+                phoneError.textContent =  ' رقم المستخدم يجب أن يبدأ ب 09 ويكون 10 خانات   ';
+              } else {
+                phone.classList.remove('error');
+                phoneError.textContent = '';
+              }}
+          }
+       
+    </script>
+</body>
+
+</html>
