@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   classInput.addEventListener('input', validateClass);
   let token=localStorage.getItem('token');
   let admin=JSON.parse(localStorage.getItem('Admin'));
-  warehouse_id=admin.id;
+  warehouse_id=parseInt(admin.id);
   console.log(typeof(admin.id))
   token1=String(token);
    
