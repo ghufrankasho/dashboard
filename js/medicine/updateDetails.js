@@ -1,223 +1,227 @@
 
-var project_id=0;
-var warehouse_id=0; 
-var token1=0; 
+var project_id = 0;
+var warehouse_id = 0;
+var token1 = 0;
 function getBaseURL() {
   return window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
-      ? "http://127.0.0.1:8000/api"  // Local environment
-      : "https://pharmacyabeer.shop/backend/public/api"; // Live environment
+    ? "http://127.0.0.1:8000/api"  // Local environment
+    : "https://pharmacyabeer.shop/backend/public/api"; // Live environment
 }
 var baseURL = getBaseURL();
 document.addEventListener('DOMContentLoaded', () => {
-    const nameInput = document.getElementById('nameInput');
-   
-    const dateInput1 = document.getElementById('dateInput1');
-    const priceInput = document.getElementById('priceInput');
-    const quantityInput = document.getElementById('quantityInput');
-  
-    nameInput.addEventListener('input', validateName);
-   
-    dateInput1.addEventListener('input', validateDates);
-    priceInput.addEventListener('input', validatenumber);
-    quantityInput.addEventListener('input', validatequantity);
-    let token=localStorage.getItem('token');
-    medicine_id=localStorage.getItem('medicine_id');
-  
-    
-    
-    console.log("ddddddddd",medicine_id,token);
-    token1=String(token);
-     
-  });
-  
+  const nameInput = document.getElementById('nameInput');
+
+  const dateInput1 = document.getElementById('dateInput1');
+  const priceInput = document.getElementById('priceInput');
+  const quantityInput = document.getElementById('quantityInput');
+
+  nameInput.addEventListener('input', validateName);
+
+  dateInput1.addEventListener('input', validateDates);
+  priceInput.addEventListener('input', validatenumber);
+  quantityInput.addEventListener('input', validatequantity);
+  let token = localStorage.getItem('token');
+  medicine_id = localStorage.getItem('medicine_id');
+
+
+
+
+  token1 = String(token);
+
+});
+
 function validateName() {
-    const nameInput = document.getElementById('nameInput');
-    const nameError = document.getElementById('nameError');
-    const value = nameInput.value.trim();
-  
-    if (!value) {
-        nameInput.classList.add('error');
-        nameError.textContent = 'مكونات الداء مطلوب';
-    } else if (value.length > 100) {
-        nameInput.classList.add('error');
-        nameError.textContent = 'مكونات الداء لا يجب أن يتجاوز 100 أحرف';
-    } else {
-        nameInput.classList.remove('error');
-        nameError.textContent = '';
-    }
+  const nameInput = document.getElementById('nameInput');
+  const nameError = document.getElementById('nameError');
+  const value = nameInput.value.trim();
+
+  if (!value) {
+    nameInput.classList.add('error');
+    nameError.textContent = 'مكونات الداء مطلوب';
+  } else if (value.length > 100) {
+    nameInput.classList.add('error');
+    nameError.textContent = 'مكونات الداء لا يجب أن يتجاوز 100 أحرف';
+  } else {
+    nameInput.classList.remove('error');
+    nameError.textContent = '';
+  }
 }
 function validateDates() {
-      const dateInput1 = document.getElementById('dateInput1');
-       
-      const dateError1 = document.getElementById('dateEnd');
-   
-    
-      
-    
-      if (!dateInput1.value) {
-          dateInput1.classList.add('error');
-          dateError1.textContent = 'تاريخ الصلاحية مطلوب';
-      } else {
-          dateInput1.classList.remove('error');
-          dateError1.textContent = '';
-      }
-    
-      
+  const dateInput1 = document.getElementById('dateInput1');
+
+  const dateError1 = document.getElementById('dateEnd');
+  var todaysDate = new Date();
+  if (new Date(dateInput1.value).setHours(0, 0, 0, 0) <= todaysDate.setHours(0, 0, 0, 0)) {
+    dateInput1.classList.add('error');
+
+    dateError1.textContent = 'تاريخ الصلاحيةيجب ان يكون أكبر من التاريخ الحالي';
+  }
+  else {
+    if (!dateInput1.value) {
+      dateInput1.classList.add('error');
+      dateError1.textContent = 'تاريخ الصلاحية مطلوب';
+    } else {
+      dateInput1.classList.remove('error');
+      dateError1.textContent = '';
+    }
+  }
+
+
 }
 function validatenumber() {
-      const priceInput = document.getElementById('priceInput');
-       
-      const priceError = document.getElementById('priceError');
-   
-    
-      
-    
-      if (!priceInput.value) {
-          priceInput.classList.add('error');
-          priceError.textContent = 'هذا الحقل مطلوب';
-      } else if(!/^[0-9]+$/.test(priceInput.value)){
-          priceInput.classList.add('error');
-          priceError.textContent = ' هذا الحقل يجب ان يكون رقم';
-      }
-      else {
-          dateInput1.classList.remove('error');
-          dateError1.textContent = '';
-      }
-    
-      
+  const priceInput = document.getElementById('priceInput');
+
+  const priceError = document.getElementById('priceError');
+
+
+
+
+  if (!priceInput.value) {
+    priceInput.classList.add('error');
+    priceError.textContent = 'هذا الحقل مطلوب';
+  } else if (!/^[0-9]+$/.test(priceInput.value)) {
+    priceInput.classList.add('error');
+    priceError.textContent = ' هذا الحقل يجب ان يكون رقم';
+  }
+  else {
+    dateInput1.classList.remove('error');
+    dateError1.textContent = '';
+  }
+
+
 }
 function validatequantity() {
-      const priceInput = document.getElementById('quantityInput');
-       
-      const priceError = document.getElementById('quantityError');
-   
-    
-      
-    
-      if (!priceInput.value) {
-          priceInput.classList.add('error');
-          priceError.textContent = 'هذا الحقل مطلوب';
-      } else if(!/^[0-9]+$/.test(priceInput.value)){
-          priceInput.classList.add('error');
-          priceError.textContent = ' هذا الحقل يجب ان يكون رقم';
-      }
-      else {
-          dateInput1.classList.remove('error');
-          dateError1.textContent = '';
-      }
-    
-      
+  const priceInput = document.getElementById('quantityInput');
+
+  const priceError = document.getElementById('quantityError');
+
+
+
+
+  if (!priceInput.value) {
+    priceInput.classList.add('error');
+    priceError.textContent = 'هذا الحقل مطلوب';
+  } else if (!/^[0-9]+$/.test(priceInput.value)) {
+    priceInput.classList.add('error');
+    priceError.textContent = ' هذا الحقل يجب ان يكون رقم';
+  }
+  else {
+    dateInput1.classList.remove('error');
+    dateError1.textContent = '';
+  }
+
+
 }
 let originalProject = {};
 
 function displayMedDetial(projectId) {
-     
-    const xhr = new XMLHttpRequest();
-    const url = `${baseURL}/warehouse/medicineDetials/${projectId}`;
-    xhr.open('GET', url, true);
-    xhr.setRequestHeader("Authorization", "Bearer " + token1);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                try {
-                    const response = JSON.parse(xhr.responseText);
-                    document.getElementById('nameInput').value = response.data.component; 
-                    document.getElementById('priceInput').value = response.data.price;
-                    document.getElementById('quantityInput').value = response.data.quantity;
-                    document.getElementById('dateInput1').value = response.data.expire_date;
-                  
-                    // Store original values
-                    originalProject = {
-                        component: response.data.component,
-                        price:response.data.price,
-                        quantity: response.data.quantity,
-                        expire_date:response.data.expire_date
-                         
-                    };
-                } catch (e) {
-                    console.error("Failed to parse response JSON:", e);
-                }
-            } else {
-                console.error("Error with request, status code:", xhr.status);
-            }
+
+  const xhr = new XMLHttpRequest();
+  const url = `${baseURL}/warehouse/medicineDetials/${projectId}`;
+  xhr.open('GET', url, true);
+  xhr.setRequestHeader("Authorization", "Bearer " + token1);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        try {
+          const response = JSON.parse(xhr.responseText);
+          document.getElementById('nameInput').value = response.data.component;
+          document.getElementById('priceInput').value = response.data.price;
+          document.getElementById('quantityInput').value = response.data.quantity;
+          document.getElementById('dateInput1').value = response.data.expire_date;
+
+          // Store original values
+          originalProject = {
+            component: response.data.component,
+            price: response.data.price,
+            quantity: response.data.quantity,
+            expire_date: response.data.expire_date
+
+          };
+        } catch (e) {
+          console.error("Failed to parse response JSON:", e);
         }
-    };
-  
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send();
+      } else {
+        console.error("Error with request, status code:", xhr.status);
+      }
+    }
+  };
+
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
 }
 function updateMedicineDetail() {
 
 
-  const formData = new FormData();  
+  const formData = new FormData();
   const currentProject = {
 
-      component: document.getElementById('nameInput').value,
-      price: document.getElementById('priceInput').value,
-      quantity: document.getElementById('quantityInput').value,
-      expire_date: document.getElementById('dateInput1').value,
-    
+    component: document.getElementById('nameInput').value,
+    price: document.getElementById('priceInput').value,
+    quantity: document.getElementById('quantityInput').value,
+    expire_date: document.getElementById('dateInput1').value,
+
   };
 
   // Compare current values with original values and append only changed fields
   if (currentProject.component !== originalProject.component) {
-      formData.append('component', currentProject.component);
+    formData.append('component', currentProject.component);
   }
   if (currentProject.price !== originalProject.price) {
     formData.append('price', currentProject.price);
-   }
+  }
   if (currentProject.quantity !== originalProject.quantity) {
     formData.append('quantity', currentProject.quantity);
   }
   if (currentProject.expire_date !== originalProject.expire_date) {
     formData.append('expire_date', currentProject.expire_date);
-   }
-  
-    formData.append('id', project_id);
-    
+  }
+
+  formData.append('id', project_id);
+
 
   const xhr = new XMLHttpRequest();
   xhr.open('POST', `${baseURL}/warehouse/medicineDetials/`, true);
   xhr.setRequestHeader("Authorization", "Bearer " + token1);
   xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-              const response = JSON.parse(xhr.responseText);
-              console.log('Update success:', response.message);
-              showAlert(null, response.message, response.status);
-          } else {
-              const response = JSON.parse(xhr.responseText);
-              showAlert(response.errors, response.message, response.status);
-              console.error('Update error:', response.errors || response.message);
-          }
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        console.log('Update success:', response.message);
+        showAlert(null, response.message, response.status);
+      } else {
+        const response = JSON.parse(xhr.responseText);
+        showAlert(response.errors, response.message, response.status);
+        console.error('Update error:', response.errors || response.message);
       }
+    }
   };
 
   xhr.send(formData);
 }
 // Call the displayProject function when the page loads
 window.addEventListener('load', () => {
-    // Get the project ID from the query parameters (e.g., "?projectId=20")
-    const urlParams = new URLSearchParams(window.location.search);
-    const projectId = urlParams.get('projectId');
-    project_id=projectId;
-    console.log("projectId from URL:", projectId);
-  
-    // Call the function with the retrieved project ID
-    if (projectId) {
-        displayMedDetial(project_id);
-    } else {
-        console.error("No projectId found in URL parameters.");
-    }
-  });
+  // Get the project ID from the query parameters (e.g., "?projectId=20")
+  const urlParams = new URLSearchParams(window.location.search);
+  const projectId = urlParams.get('projectId');
+  project_id = projectId;
+  console.log("projectId from URL:", projectId);
+
+  // Call the function with the retrieved project ID
+  if (projectId) {
+    displayMedDetial(project_id);
+  } else {
+    console.error("No projectId found in URL parameters.");
+  }
+});
 function showAlert(data, message, status) {
-    // Show the success message in the "success-message" div
-    const Message = document.getElementById('form');
-    const div = document.createElement('div');
-    console.log(data)
-    if (status) {
-      div.className = "success alert d-none mt-3 mx-auto"
-      div.innerHTML = ` 
+  // Show the success message in the "success-message" div
+  const Message = document.getElementById('form');
+  const div = document.createElement('div');
+  console.log(data)
+  if (status) {
+    div.className = "success alert d-none mt-3 mx-auto"
+    div.innerHTML = ` 
     <div class="content-message-alert" id ="AlertMessage">
       <div class="icon">
         <svg width="50" height="50" id="Layer_1" style="enable-background:new 0 0 128 128;" version="1.1" viewBox="0 0 128 128" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><circle fill="#fff" cx="64" cy="64" r="64"/></g><g><path fill="#3EBD61" d="M54.3,97.2L24.8,67.7c-0.4-0.4-0.4-1,0-1.4l8.5-8.5c0.4-0.4,1-0.4,1.4,0L55,78.1l38.2-38.2   c0.4-0.4,1-0.4,1.4,0l8.5,8.5c0.4,0.4,0.4,1,0,1.4L55.7,97.2C55.3,97.6,54.7,97.6,54.3,97.2z"/></g></svg>
@@ -231,10 +235,10 @@ function showAlert(data, message, status) {
   <svg height="18px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="18px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="#69727D" d="M437.5,386.6L306.9,256l130.6-130.6c14.1-14.1,14.1-36.8,0-50.9c-14.1-14.1-36.8-14.1-50.9,0L256,205.1L125.4,74.5  c-14.1-14.1-36.8-14.1-50.9,0c-14.1,14.1-14.1,36.8,0,50.9L205.1,256L74.5,386.6c-14.1,14.1-14.1,36.8,0,50.9  c14.1,14.1,36.8,14.1,50.9,0L256,306.9l130.6,130.6c14.1,14.1,36.8,14.1,50.9,0C451.5,423.4,451.5,400.6,437.5,386.6z"/></svg>
   </button>
   `
-    }
-    if (!status) {
-      div.className = "warning alert d-none mt-3 mx-auto"
-      div.innerHTML = ` 
+  }
+  if (!status) {
+    div.className = "warning alert d-none mt-3 mx-auto"
+    div.innerHTML = ` 
     
     <div class="content-message-alert" id ="AlertMessage">
       <div class="icon">
@@ -251,10 +255,10 @@ function showAlert(data, message, status) {
   </div>
   
   `
-    }
-    if (status == null) {
-      div.className = "danger alert d-none mt-3 mx-auto"
-      div.innerHTML = ` 
+  }
+  if (status == null) {
+    div.className = "danger alert d-none mt-3 mx-auto"
+    div.innerHTML = ` 
     
     <div class="content-message-alert" id ="AlertMessage">
       <div class="icon">
@@ -268,16 +272,16 @@ function showAlert(data, message, status) {
   </div>
   
   `
-    }
-    Message.appendChild(div);
-    div.classList.remove('d-none');
-    const alertButton = document.getElementById('AlertButton');
-    alertButton.addEventListener('click', () => {
-      // Get the message container
-  
-  
-      // Remove the message container from the DOM
-      div.remove();
-      if(status)window.location.href =`/medicine/proj.html`;
-    });
+  }
+  Message.appendChild(div);
+  div.classList.remove('d-none');
+  const alertButton = document.getElementById('AlertButton');
+  alertButton.addEventListener('click', () => {
+    // Get the message container
+
+
+    // Remove the message container from the DOM
+    div.remove();
+    if (status) window.location.href = `/medicine/proj.html`;
+  });
 }

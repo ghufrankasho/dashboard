@@ -211,12 +211,10 @@ function searchproject(input) {
 
         });
 
-      } }
+      } 
       else {
-        if (xhr.status === 204) {
-          // show no result message
-          
-          
+        
+        
           const projectContainer = document.getElementById('projects');
           projectContainer.innerHTML = '';
 
@@ -226,12 +224,15 @@ function searchproject(input) {
                       
        
              
-            <td >no result found </td>    
+            <h1 style="text-align: center; width: 1000px; margin: 30 auto;">NO RESULT FOUND </h1>    
            
          `;
-          projectContainer.appendChild(projecttr);
-        }
-      }
+           // show no result message
+           projectContainer.appendChild(projecttr);
+           console.log("kkkkkkkkkkkk");
+          
+     
+      }}
     };
     xhr.send(data);
 

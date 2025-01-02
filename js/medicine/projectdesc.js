@@ -50,11 +50,11 @@ function viewProject(medicine_id) {
                                    
                                   <div class="col-md-8">
                                   <div class="card-body">
-                                  <h5 class="card-title">مكونات الداء </h5>
+                                  <h5 class="card-title">مكونات الدواء </h5>
                                   <p>${response.data.medicinedetials.component}</p>
-                                  <h5 class="card-title">  سعر الداء</h5>
+                                  <h5 class="card-title">  سعر الدواء</h5>
                                   <p class="card-text">${response.data.medicinedetials.price}</p>
-                                  <h5 class="card-title">  كمية الداء</h5>
+                                  <h5 class="card-title">  كمية الدواء</h5>
                                   <p class="card-text">${response.data.medicinedetials.quantity}</p>
                                  <h5 class="card-title">  تاريخ نهاية الصلاحية</h5>
                                   <p class="card-text">${response.data.medicinedetials.expire_date}</p>
