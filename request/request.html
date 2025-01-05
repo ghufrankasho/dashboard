@@ -66,15 +66,34 @@
 					.then(text => {document.getElementById('nav-placeholder').innerHTML = text;
 				let admin=	 JSON.parse(localStorage.getItem('Admin'));
 				 
+
+				// Handle Dark Mode
 				const switchMode = document.getElementById('switch-mode');
+				const body = document.body;
 	
-				switchMode.addEventListener('change', function () {
-					if(this.checked) {
-						document.body.classList.add('dark');
-					} else {
-						document.body.classList.remove('dark');
-					}
+				// Check localStorage for saved theme preference
+				const savedMode = localStorage.getItem('theme');
+				if (savedMode === 'dark') {
+				  body.classList.add('dark');
+				  switchMode.checked = true;
+				} else {
+				  body.classList.remove('dark');
+				  switchMode.checked = false;
+				}
+	
+				// Toggle dark mode on checkbox change
+				switchMode.addEventListener('change', function() {
+				  if (this.checked) {
+					body.classList.add('dark');
+					localStorage.setItem('theme', 'dark');
+				  } else {
+					body.classList.remove('dark');
+					localStorage.setItem('theme', 'light');
+				  }
 				});
+				   	 
+			 
+			
 				// TOGGLE SIDEBAR
 				const menuBar = document.querySelector('#content nav .bx.bx-menu');
 				const sidebar = document.getElementById('sidebar');
@@ -186,5 +205,8 @@
 	
 	<script src="/js/script.js"></script>
 	<script src="/js/request/request.js"></script>
+	<script>
+		// script.js - Dark Mode Handling
+	</script>
 </body>
 </html>

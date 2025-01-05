@@ -63,16 +63,36 @@
 			fetch('/nav.html')
 				.then(response => response.text())
 				.then(text => {document.getElementById('nav-placeholder').innerHTML = text;
+			let admin=	 JSON.parse(localStorage.getItem('Admin'));
 			 
-			const switchMode = document.getElementById('switch-mode');
 
-			switchMode.addEventListener('change', function () {
-				if(this.checked) {
-					document.body.classList.add('dark');
-				} else {
-					document.body.classList.remove('dark');
-				}
+			// Handle Dark Mode
+			const switchMode = document.getElementById('switch-mode');
+			const body = document.body;
+
+			// Check localStorage for saved theme preference
+			const savedMode = localStorage.getItem('theme');
+			if (savedMode === 'dark') {
+			  body.classList.add('dark');
+			  switchMode.checked = true;
+			} else {
+			  body.classList.remove('dark');
+			  switchMode.checked = false;
+			}
+
+			// Toggle dark mode on checkbox change
+			switchMode.addEventListener('change', function() {
+			  if (this.checked) {
+				body.classList.add('dark');
+				localStorage.setItem('theme', 'dark');
+			  } else {
+				body.classList.remove('dark');
+				localStorage.setItem('theme', 'light');
+			  }
 			});
+					
+		 
+		
 			// TOGGLE SIDEBAR
 			const menuBar = document.querySelector('#content nav .bx.bx-menu');
 			const sidebar = document.getElementById('sidebar');
@@ -127,8 +147,36 @@
 			</div>
 		</main>
 		</section>
+		
 		<script src="/js/script.js"></script>
 		<script src="/js/medicine/project.js"></script>
+		<script>
+			// script.js - Dark Mode Handling
+			document.addEventListener('DOMContentLoaded', function () {
+				const switchMode = document.getElementById('switch-mode');
+				const body = document.body;
+			
+				// Check localStorage for saved theme preference
+				const savedMode = localStorage.getItem('theme');
+				if (savedMode === 'dark') {
+					body.classList.add('dark'); // Apply dark mode
+					switchMode.checked = true;  // Ensure the checkbox is checked
+				} else {
+					body.classList.remove('dark'); // Apply light mode
+					switchMode.checked = false;   // Ensure the checkbox is unchecked
+				}
+			
+				// Toggle dark mode on checkbox change
+				switchMode.addEventListener('change', function () {
+					if (this.checked) {
+						body.classList.add('dark'); // Enable dark mode
+						localStorage.setItem('theme', 'dark'); // Save preference
+					} else {
+						body.classList.remove('dark'); // Disable dark mode
+						localStorage.setItem('theme', 'light'); // Save preference
+					}
+				});
+			});</script>
 </body>
 
 </html>

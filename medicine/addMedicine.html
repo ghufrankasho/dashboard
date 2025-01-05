@@ -58,11 +58,17 @@
                     <span id="nameError" class="error-message"></span>
 
                 </div>
+                
                 <div class="rr " style="margin-right: 20px;">
                     <label for="name">تصنيف الداوء :</label>
-                    <input dir="rtl" type="text" id="classInput">
-                    <span id="classError" class="error-message"></span>
-
+                    <select name="cars" id="classifictions">
+                        <option value="default">اختر تصنيف</option>
+                        <option value="option1">option 1</option>
+                        <option value="option2">option 2</option>
+                        <option value="option3">option 3</option>
+                        <option value="option4">option 4</option>
+                      </select>
+                      <span id="classError" class="error-message"></span>
                 </div>
  
 
@@ -90,7 +96,11 @@
 
 <script src="/js/medicine/addMedicine.js"></script>
 
-<script>
+<script> 
+    const select_class = document.getElementById('classifictions');
+    const classment = select_class.options[select_class.selectedIndex].text;
+   console.log(classment);
+
     let profilePic = document.getElementById("profile-pic");
     let inputFile = document.getElementById("input-file");
 

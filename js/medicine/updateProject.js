@@ -10,10 +10,10 @@ function getBaseURL() {
 var baseURL = getBaseURL();
 document.addEventListener('DOMContentLoaded', () => {
     const nameInput = document.getElementById('nameInput');
-    const classInput = document.getElementById('classInput');
-  
+    
+    
     nameInput.addEventListener('input', validateName);
-    classInput.addEventListener('input', validateClass);
+    
     let token=localStorage.getItem('token');
     let admin=JSON.parse(localStorage.getItem('Admin'));
     warehouse_id=admin.id;
@@ -36,22 +36,7 @@ function validateName() {
         nameError.textContent = '';
     }
   }
-function validateClass() {
-      const nameInput = document.getElementById('classInput');
-      const nameError = document.getElementById('classError');
-      const value = nameInput.value.trim();
-    
-      if (!value) {
-          nameInput.classList.add('error');
-          nameError.textContent = 'اسم الداء مطلوب';
-      } else if (value.length > 200) {
-          nameInput.classList.add('error');
-          nameError.textContent = 'اسم الداء لا يجب أن يتجاوز 200 أحرف';
-      } else {
-          nameInput.classList.remove('error');
-          nameError.textContent = '';
-      }
-    }
+ 
 
  
 
@@ -70,8 +55,9 @@ function displayProject(projectId) {
                     const response = JSON.parse(xhr.responseText);
                     document.getElementById('profile-pic').src = response.data.photo;
                     document.getElementById('nameInput').value = response.data.name;
-                     
-                    document.getElementById('classInput').value = response.data.calssification;
+                    const select_class = document.getElementById('classifictions');
+                   
+                    select_class.options[select_class.selectedIndex].text= response.data.calssification;
                   
                     // Store original values
                     originalProject = {
@@ -95,11 +81,12 @@ function displayProject(projectId) {
  
 function updateMedicine() {
   const formData = new FormData();  
- 
+  const select_class = document.getElementById('classifictions');
+  const classInput = select_class.options[select_class.selectedIndex].text;
   const currentProject = {
       name: document.getElementById('nameInput').value,
      
-      classification: document.getElementById('classInput').value,
+      classification: classInput,
     
   };
 

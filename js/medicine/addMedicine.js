@@ -57,10 +57,11 @@ function validateClass() {
 
 function addMedicine() {
   const formData = new FormData();
-
+  const select_class = document.getElementById('classifictions');
+  const classment = select_class.options[select_class.selectedIndex].text;
   const currentProject = {
     name: document.getElementById('nameInput').value,
-    calssification: document.getElementById('classInput').value,
+    calssification: classment,
 
 
   };
