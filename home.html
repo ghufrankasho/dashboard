@@ -19,9 +19,36 @@
 		<!-- sidebar -->
 		<div id="sidebar-placeholder"></div>
 		<script>
-			fetch('sidebar.html')
-				.then(response => response.text())
-				.then(text => document.getElementById('sidebar-placeholder').innerHTML = text);
+			fetch('/sidebar.html')
+    .then(response => response.text())
+    .then(text => {
+        document.getElementById('sidebar-placeholder').innerHTML = text;
+
+        const allSideMenu = document.querySelectorAll('.side-menu.top li a');
+
+        // Check current page and highlight the active link based on the URL path
+        const currentPage = window.location.pathname;
+        allSideMenu.forEach(item => {
+            if (item.getAttribute('href') === currentPage) {
+                item.parentElement.classList.add('active');
+            }
+        });
+
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
+            item.addEventListener('click', function (e) {
+                // Prevent default only for testing if the page reload should be avoided
+                // e.preventDefault(); // Uncomment this line for a single-page application
+
+                allSideMenu.forEach(i => i.parentElement.classList.remove('active'));
+                li.classList.add('active');
+
+                // Optional: Save active page for persistence (SPA usage only)
+                localStorage.setItem('activePage', item.getAttribute('href'));
+            });
+        });
+    });
+
 		</script>
 		<!-- sidebar -->
 	</section>
@@ -111,9 +138,11 @@
 					<table>
 						<thead>
 							<tr>
-								<th>المسخدم</th>
-								<th>تاريخ التقديم  </th>
-								<th>الوضع </th>
+								<th>الصيدلية </th>
+								<th>الدواء </th>
+								<th>الكمية </th>
+							 
+								<th>حالة الطلب </th>
 							</tr>
 						</thead>
 						<tbody id="requests">
@@ -125,7 +154,8 @@
 				<div class="order">
 					<div class="head">
 						<h3> الادوية</h3>
-					 
+						<a href="/medicine/addMedicine.html">	<i class='bx bx-plus' ></i></a>
+					
 					</div>
 					<table>
 						<thead>

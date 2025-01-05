@@ -19,8 +19,35 @@
 		<div id="sidebar-placeholder"></div>
 		<script>
 			fetch('/sidebar.html')
-				.then(response => response.text())
-				.then(text => document.getElementById('sidebar-placeholder').innerHTML = text);
+    .then(response => response.text())
+    .then(text => {
+        document.getElementById('sidebar-placeholder').innerHTML = text;
+
+        const allSideMenu = document.querySelectorAll('.side-menu.top li a');
+
+        // Check current page and highlight the active link based on the URL path
+        const currentPage = window.location.pathname;
+        allSideMenu.forEach(item => {
+            if (item.getAttribute('href') === currentPage) {
+                item.parentElement.classList.add('active');
+            }
+        });
+
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
+            item.addEventListener('click', function (e) {
+                // Prevent default only for testing if the page reload should be avoided
+                // e.preventDefault(); // Uncomment this line for a single-page application
+
+                allSideMenu.forEach(i => i.parentElement.classList.remove('active'));
+                li.classList.add('active');
+
+                // Optional: Save active page for persistence (SPA usage only)
+                localStorage.setItem('activePage', item.getAttribute('href'));
+            });
+        });
+    });
+
 		</script>
 		<!-- sidebar -->
 	</section>
@@ -60,7 +87,25 @@
 
 
 		<section class="project">
+			<main>
+			
+			<div class="head-title">
+				<div class="left">
+					<h1>> الادوية </h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="/home.html"  class="active">لوحة التحكم </a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">الادوية</a>
+						</li>
+					</ul>
+				</div>
+				
+			</div>
 			<header class="head">
+				
 				<div class="h d-flex" role="search" dir="rtl">
 					<input class="form-control me-2 p-2" id="search_input" type="search" placeholder="بحث"
 						aria-label="Search">
@@ -79,6 +124,7 @@
 			<div class="container" id="projects">
 
 			</div>
+		</main>
 		</section>
 		<script src="/js/script.js"></script>
 		<script src="/js/medicine/project.js"></script>

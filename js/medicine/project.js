@@ -20,7 +20,8 @@ function displayProjects() {
               // Clear existing projects
               projectContainer.innerHTML = '';
               
-             if(projects.data.medicines.length!==0){ projects.data.medicines.forEach(function(project) {
+             if(projects.data.medicines.length!==0){
+               projects.data.medicines.forEach(function(project) {
                   const projectDiv = document.createElement('div');
                   projectDiv.className = 'box';
                   projectDiv.innerHTML = `
@@ -129,9 +130,6 @@ function deleteProject(id) {
 }
 function searchproject(input) {
    
-  const data = JSON.stringify({ "search": input });  // Ensure id is an integer
-
-
   const xhr = new XMLHttpRequest();
   xhr.open('POST', `${baseURL}/warehouse/medicine/search/`, true);
   xhr.setRequestHeader('Content-Type', 'application/json');

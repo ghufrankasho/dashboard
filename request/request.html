@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+	<link rel="stylesheet" href="/css/alert.css">
+<!-- HEADER -->
+<div id="header-placeholder"></div>
+<script>
+	fetch('/header.html')
+		.then(response => response.text())
+		.then(text => document.getElementById('header-placeholder').innerHTML = text);
+</script>
+<!-- HEADER -->
+<body>
+
+
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+			<!-- sidebar -->
+			<div id="sidebar-placeholder"></div>
+			<script>
+				fetch('/sidebar.html')
+    .then(response => response.text())
+    .then(text => {
+        document.getElementById('sidebar-placeholder').innerHTML = text;
+
+        const allSideMenu = document.querySelectorAll('.side-menu.top li a');
+
+        // Check current page and highlight the active link based on the URL path
+        const currentPage = window.location.pathname;
+        allSideMenu.forEach(item => {
+            if (item.getAttribute('href') === currentPage) {
+                item.parentElement.classList.add('active');
+            }
+        });
+
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
+            item.addEventListener('click', function (e) {
+                // Prevent default only for testing if the page reload should be avoided
+                // e.preventDefault(); // Uncomment this line for a single-page application
+
+                allSideMenu.forEach(i => i.parentElement.classList.remove('active'));
+                li.classList.add('active');
+
+                // Optional: Save active page for persistence (SPA usage only)
+                localStorage.setItem('activePage', item.getAttribute('href'));
+            });
+        });
+    });
+
+				</script>
+			<!-- sidebar -->
+	</section>
+	<!-- SIDEBAR -
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		 
+			<!-- NAV BAR -->
+			<div id="nav-placeholder"></div>
+			<script>
+				fetch('/nav.html')
+					.then(response => response.text())
+					.then(text => {document.getElementById('nav-placeholder').innerHTML = text;
+				let admin=	 JSON.parse(localStorage.getItem('Admin'));
+				 
+				const switchMode = document.getElementById('switch-mode');
+	
+				switchMode.addEventListener('change', function () {
+					if(this.checked) {
+						document.body.classList.add('dark');
+					} else {
+						document.body.classList.remove('dark');
+					}
+				});
+				// TOGGLE SIDEBAR
+				const menuBar = document.querySelector('#content nav .bx.bx-menu');
+				const sidebar = document.getElementById('sidebar');
+	
+				menuBar.addEventListener('click', function () {
+					sidebar.classList.toggle('hide');
+				});
+				});
+			</script>
+       <!-- NAV BAR -->
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>> الطلبات </h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="/home.html"  class="active">لوحة التحكم </a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">الطلبات</a>
+						</li>
+					</ul>
+				</div>
+				
+			</div>
+
+			<ul class="box-info">
+				 
+				<li>
+					<i class='bx bxs-message-dots' ></i>
+					<span class="text">
+						<h3 id="request_num"></h3>
+						<p>الطلبات 
+
+						</p>
+					</span>
+				<li>
+						
+					<div class="h d-flex" role="search" dir="rtl">
+						
+						<input class="form-control me-2 p-2" id="search_input" type="search" placeholder="بحث" aria-label="Search">
+						<a class="nav-link align-items-center" id="search"  type="submit"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search"
+							viewBox="0 0 16 16">
+							<path
+							d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+						</svg>
+						</a>
+						
+					</div></li>
+				</li>
+			 
+				
+			</ul>
+			
+
+
+			<div class="table-data">
+				<div class="order" >
+					<div class="head">
+						<i class="bx bxs-calendar-check" style="color: var(--orange);"></i>
+						<h3 style="color: var(--orange);" id="text-request"> الحديثة </h3>
+						<h3  id="no-result" style="display:none;">no result found !! </h3>  
+					</div>
+					<table >
+						<thead>
+							<tr>
+								<th></th>
+								<th>الدواء </th>
+								<th>الصيدلية</th>
+								<th>الكمية المطلوبة</th>
+								<th id="status1" style="display: none;">الوضع </th>
+							</tr>
+						</thead>
+						<tbody id="requests-wait"></tbody>
+					
+					</table>
+				</div>
+            </div>
+			<div class="table-data">
+				<div class="order" id="done_request" style="display: block;" >
+					<div class="head">
+						<i class="bx bxs-calendar-check"></i>
+						<h3>  المؤكدة</h3>
+						
+					</div>
+					<table >
+						<thead>
+							<tr>
+								<th></th>
+								<th>الدواء </th>
+								<th>الصيدلية</th>
+								<th>الكمية المطلوبة</th>
+							 
+							</tr>
+						</thead>
+						<tbody id="requests-done"></tbody>
+					
+					</table>
+				</div>
+            </div>
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	
+	<script src="/js/script.js"></script>
+	<script src="/js/request/request.js"></script>
+</body>
+</html>

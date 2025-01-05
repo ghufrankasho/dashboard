@@ -16,7 +16,7 @@ function displayrequest() {
     const total_num=document.getElementById('total_num');
     const medicine_num=document.getElementById('medicine_num');
     
-    const url = `${baseURL}/warehouse/home?id=${Admin.id}`;
+    const url = `${baseURL}/warehouse/home`;
     xhr.open('GET', url, true);
     xhr.setRequestHeader("Authorization", "Bearer " + token1);
     xhr.onreadystatechange = function () {
@@ -43,16 +43,37 @@ function displayrequest() {
                    requesttr.id='tra';
                     requesttr.innerHTML = `
                         <td>
-                        <a href="/prof.html"> <img src="${request.logo}" ></a>
-                        <p id='name-${request.id}'></p>
+                        <a href="/prof.html"> <img src="${request.pharmacy.logo}" ></a>
+                      
                         </td>
-                        <td>${request.name}</td>
-                         <td>${request.email}</td>
+                        <td>  <a href="medicine/projDesc.html?projectId=${request.medicine.id}"> <img src="${request.medicine.photo}" ></a>
+                      </td>
+
+                        <td>${request.quantity}</td>
+                       
+                        <td><span class="status pending "  id="avalible-${request.id}">wait</span></td> 
+                         
+                        
                         </tr>
                       `;
                       
                     
                       requestContainer.appendChild(requesttr);
+                      const span = document.getElementById(`avalible-${request.id}`);
+                    
+                      if(request.confirmed=="done")
+                        {
+                          span.className='status completed';
+                          span.textContent=request.confirmed;
+                         
+                          
+                        }
+
+                        else{
+                          span.className='status not-completed' ;
+                           
+                          
+                        }
                       
                     
                 });}
@@ -88,14 +109,12 @@ function displayrequest() {
  
 
 }
-  window.addEventListener('load', () => {
+window.addEventListener('load', () => {
 
     let token=localStorage.getItem('token');
-    let admin=JSON.parse(localStorage.getItem('Admin'));
-    Admin=admin;
+   
     token1=String(token);
-    // console.log("fffffffffff",token1);
-    // displayProjects();
+ 
     
      displayrequest();
   
