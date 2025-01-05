@@ -88,7 +88,7 @@ function displayProject(projectId) {
         }
     };
   
-    xhr.setRequestHeader('Content-Type', 'application/json');
+     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send();
 }
 
@@ -121,8 +121,9 @@ function updateMedicine() {
   formData.append('id', project_id); // Always include the project ID
    console.log(...formData);
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', `${baseURL}/warehouse/medicine/`, true);
+  xhr.open('POST', `${baseURL}/warehouse/medicine`, true);
   xhr.setRequestHeader("Authorization", "Bearer " + token1);
+
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
           if (xhr.status === 200) {
