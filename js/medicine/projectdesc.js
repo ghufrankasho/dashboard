@@ -12,7 +12,7 @@ function viewProject(medicine_id) {
      
 
     const xhr = new XMLHttpRequest();
-    const url = `${baseURL}/warehouse/medicine/${medicine_id}`;
+    const url = `${baseURL}/warehouse/medicine?id=${medicine_id}`;
     xhr.open('GET', url, true);
     xhr.setRequestHeader("Authorization", "Bearer " + token1)
     xhr.onreadystatechange = function () {
