@@ -95,8 +95,8 @@ function validatenumber() {
         priceError.textContent = ' هذا الحقل يجب ان يكون رقم';
     }
     else {
-        dateInput1.classList.remove('error');
-        dateError1.textContent = '';
+      priceError.classList.remove('error');
+      priceError.textContent = '';
     }
   
     
@@ -117,8 +117,8 @@ function validatequantity() {
         priceError.textContent = ' هذا الحقل يجب ان يكون رقم';
     }
     else {
-        dateInput1.classList.remove('error');
-        dateError1.textContent = '';
+      priceError.classList.remove('error');
+      priceError.textContent = '';
     }
   
     
