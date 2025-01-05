@@ -1,10 +1,10 @@
 
-let warehouse_id=null;
-let token1=null;
+let warehouse_id = null;
+let token1 = null;
 function getBaseURL() {
   return window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
-      ? "http://127.0.0.1:8000/api"  // Local environment
-      : "https://pharmacyabeer.shop/backend/public/api"; // Live environment
+    ? "http://127.0.0.1:8000/api"  // Local environment
+    : "https://pharmacyabeer.shop/backend/public/api"; // Live environment
 }
 var baseURL = getBaseURL();
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,12 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   nameInput.addEventListener('input', validateName);
   classInput.addEventListener('input', validateClass);
-  let token=localStorage.getItem('token');
-  let admin=JSON.parse(localStorage.getItem('Admin'));
-  warehouse_id=parseInt(admin.id);
-  console.log(typeof(admin.id))
-  token1=String(token);
-   
+  let token = localStorage.getItem('token');
+  let admin = JSON.parse(localStorage.getItem('Admin'));
+  warehouse_id = parseInt(admin.id);
+  console.log(typeof (admin.id))
+  token1 = String(token);
+
 });
 
 function validateName() {
@@ -27,86 +27,87 @@ function validateName() {
   const value = nameInput.value.trim();
 
   if (!value) {
-      nameInput.classList.add('error');
-      nameError.textContent = 'اسم الداوء مطلوب';
+    nameInput.classList.add('error');
+    nameError.textContent = 'اسم الداوء مطلوب';
   } else if (value.length > 100) {
-      nameInput.classList.add('error');
-      nameError.textContent = 'اسم الداوء لا يجب أن يتجاوز 100 أحرف';
+    nameInput.classList.add('error');
+    nameError.textContent = 'اسم الداوء لا يجب أن يتجاوز 100 أحرف';
   } else {
-      nameInput.classList.remove('error');
-      nameError.textContent = '';
+    nameInput.classList.remove('error');
+    nameError.textContent = '';
   }
 }
 function validateClass() {
-    const nameInput = document.getElementById('classInput');
-    const nameError = document.getElementById('classError');
-    const value = nameInput.value.trim();
-  
-    if (!value) {
-        nameInput.classList.add('error');
-        nameError.textContent = 'اسم الداوء مطلوب';
-    } else if (value.length > 200) {
-        nameInput.classList.add('error');
-        nameError.textContent = 'اسم الداوء لا يجب أن يتجاوز 200 أحرف';
-    } else {
-        nameInput.classList.remove('error');
-        nameError.textContent = '';
-    }
+  const nameInput = document.getElementById('classInput');
+  const nameError = document.getElementById('classError');
+  const value = nameInput.value.trim();
+
+  if (!value) {
+    nameInput.classList.add('error');
+    nameError.textContent = 'اسم الداوء مطلوب';
+  } else if (value.length > 200) {
+    nameInput.classList.add('error');
+    nameError.textContent = 'اسم الداوء لا يجب أن يتجاوز 200 أحرف';
+  } else {
+    nameInput.classList.remove('error');
+    nameError.textContent = '';
   }
- 
- 
+}
+
+
 function addMedicine() {
-  const formData = new FormData();  
-  
+  const formData = new FormData();
+
   const currentProject = {
-      name: document.getElementById('nameInput').value,
-      calssification: document.getElementById('classInput').value,
-      
-  
+    name: document.getElementById('nameInput').value,
+    calssification: document.getElementById('classInput').value,
+
+
   };
- 
-    formData.append('name', currentProject.name);
-    formData.append('calssification', currentProject.calssification);
-    formData.append('warehouse_id',warehouse_id);
-  
+
+  formData.append('name', currentProject.name);
+  formData.append('calssification', currentProject.calssification);
+  formData.append('warehouse_id', warehouse_id);
+
 
   // Check if a new image file has been selected
   const imageInput = document.getElementById('input-file');
-  if ( imageInput !=null && imageInput.files.length > 0) {
-      formData.append('photo', imageInput.files[0]);
+  if (imageInput != null && imageInput.files.length > 0) {
+    formData.append('photo', imageInput.files[0]);
   }
 
-  
-console.log(...formData);
+
+  console.log(...formData);
   const xhr = new XMLHttpRequest();
   xhr.open('POST', `${baseURL}/warehouse/medicine/add/`, true);
   xhr.setRequestHeader("Authorization", "Bearer " + token1);
+  xhr.setRequestHeader("Route-Name", "addmedicine");
   xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-          if (xhr.status === 201) {
-              const response = JSON.parse(xhr.responseText);
-              console.log('Update success:', response.message);
-              showAlert(null, response.message, response.status);
-          } else {
-              const response = JSON.parse(xhr.responseText);
-              showAlert(response.errors, response.message, response.status);
-              console.error('Update error:', response.errors || response.message);
-          }
+    if (xhr.readyState === 4) {
+      if (xhr.status === 201) {
+        const response = JSON.parse(xhr.responseText);
+        console.log('Update success:', response.message);
+        showAlert(null, response.message, response.status);
+      } else {
+        const response = JSON.parse(xhr.responseText);
+        showAlert(response.errors, response.message, response.status);
+        console.error('Update error:', response.errors || response.message);
       }
+    }
   };
 
   xhr.send(formData);
 }
- 
-  
+
+
 function showAlert(data, message, status) {
-    // Show the success message in the "success-message" div
-    const Message = document.getElementById('form');
-    const div = document.createElement('div');
-    console.log(data)
-    if (status) {
-      div.className = "success alert d-none mt-3 mx-auto"
-      div.innerHTML = ` 
+  // Show the success message in the "success-message" div
+  const Message = document.getElementById('form');
+  const div = document.createElement('div');
+  console.log(data)
+  if (status) {
+    div.className = "success alert d-none mt-3 mx-auto"
+    div.innerHTML = ` 
     <div class="content-message-alert" id ="AlertMessage">
       <div class="icon">
         <svg width="50" height="50" id="Layer_1" style="enable-background:new 0 0 128 128;" version="1.1" viewBox="0 0 128 128" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><circle fill="#fff" cx="64" cy="64" r="64"/></g><g><path fill="#3EBD61" d="M54.3,97.2L24.8,67.7c-0.4-0.4-0.4-1,0-1.4l8.5-8.5c0.4-0.4,1-0.4,1.4,0L55,78.1l38.2-38.2   c0.4-0.4,1-0.4,1.4,0l8.5,8.5c0.4,0.4,0.4,1,0,1.4L55.7,97.2C55.3,97.6,54.7,97.6,54.3,97.2z"/></g></svg>
@@ -120,10 +121,10 @@ function showAlert(data, message, status) {
   <svg height="18px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="18px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="#69727D" d="M437.5,386.6L306.9,256l130.6-130.6c14.1-14.1,14.1-36.8,0-50.9c-14.1-14.1-36.8-14.1-50.9,0L256,205.1L125.4,74.5  c-14.1-14.1-36.8-14.1-50.9,0c-14.1,14.1-14.1,36.8,0,50.9L205.1,256L74.5,386.6c-14.1,14.1-14.1,36.8,0,50.9  c14.1,14.1,36.8,14.1,50.9,0L256,306.9l130.6,130.6c14.1,14.1,36.8,14.1,50.9,0C451.5,423.4,451.5,400.6,437.5,386.6z"/></svg>
   </button>
   `
-    }
-    if (!status) {
-      div.className = "warning alert d-none mt-3 mx-auto"
-      div.innerHTML = ` 
+  }
+  if (!status) {
+    div.className = "warning alert d-none mt-3 mx-auto"
+    div.innerHTML = ` 
     
     <div class="content-message-alert" id ="AlertMessage">
       <div class="icon">
@@ -140,10 +141,10 @@ function showAlert(data, message, status) {
   </div>
   
   `
-    }
-    if (status == null) {
-      div.className = "danger alert d-none mt-3 mx-auto"
-      div.innerHTML = ` 
+  }
+  if (status == null) {
+    div.className = "danger alert d-none mt-3 mx-auto"
+    div.innerHTML = ` 
     
     <div class="content-message-alert" id ="AlertMessage">
       <div class="icon">
@@ -157,16 +158,16 @@ function showAlert(data, message, status) {
   </div>
   
   `
-    }
-    Message.appendChild(div);
-    div.classList.remove('d-none');
-    const alertButton = document.getElementById('AlertButton');
-    alertButton.addEventListener('click', () => {
-      // Get the message container
-  
-  
-      // Remove the message container from the DOM
-      div.remove();
-      if(status)window.location.href =`/medicine/proj.html`;
-    });
   }
+  Message.appendChild(div);
+  div.classList.remove('d-none');
+  const alertButton = document.getElementById('AlertButton');
+  alertButton.addEventListener('click', () => {
+    // Get the message container
+
+
+    // Remove the message container from the DOM
+    div.remove();
+    if (status) window.location.href = `/medicine/proj.html`;
+  });
+}
