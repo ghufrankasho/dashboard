@@ -105,6 +105,7 @@ function displayProjects() {
   xhr.send();
   xhr.setRequestHeader("Route-Name", "warehouse_medicines");
 }
+
 function deleteProject(id) {
   const data = JSON.stringify({ "id": id });  // Ensure id is an integer
   const xhr = new XMLHttpRequest();
@@ -128,10 +129,10 @@ function deleteProject(id) {
   xhr.send();
 }
 function searchproject(input) {
-   
+  
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', `${baseURL}/warehouse/medicine/search/`, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.open('GET', `${baseURL}/warehouse/medicine/search?search=${input}`, true);
+ 
   xhr.setRequestHeader("Authorization", "Bearer " + token1);
   xhr.onreadystatechange = function () {
 
@@ -231,7 +232,7 @@ function searchproject(input) {
      
       }}
     };
-    xhr.send(data);
+    xhr.send();
 
 }
 function showAlert(data, message, status) {
