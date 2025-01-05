@@ -105,7 +105,6 @@ function displayProjects() {
   xhr.send();
   xhr.setRequestHeader("Route-Name", "warehouse_medicines");
 }
-
 function deleteProject(id) {
   const data = JSON.stringify({ "id": id });  // Ensure id is an integer
   const xhr = new XMLHttpRequest();
