@@ -84,8 +84,8 @@ function validatenumber() {
     priceError.textContent = ' هذا الحقل يجب ان يكون رقم';
   }
   else {
-    dateInput1.classList.remove('error');
-    dateError1.textContent = '';
+    priceInput.classList.remove('error');
+    priceError.textContent = '';
   }
 
 
@@ -106,8 +106,8 @@ function validatequantity() {
     priceError.textContent = ' هذا الحقل يجب ان يكون رقم';
   }
   else {
-    dateInput1.classList.remove('error');
-    dateError1.textContent = '';
+    priceInput.classList.remove('error');
+    priceError.textContent = '';
   }
 
 
@@ -181,7 +181,7 @@ function updateMedicineDetail() {
 
 
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', `${baseURL}/warehouse/medicineDetials/`, true);
+  xhr.open('POST', `${baseURL}/warehouse/medicineDetials`, true);
   xhr.setRequestHeader("Authorization", "Bearer " + token1);
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
