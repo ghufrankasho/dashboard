@@ -79,7 +79,7 @@ function addMedicine() {
 
   console.log(...formData);
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', `${baseURL}/warehouse/medicine/add/`, true);
+  xhr.open('POST', `${baseURL}/warehouse/medicine/add`, true);
   xhr.setRequestHeader("Authorization", "Bearer " + token1);
   xhr.setRequestHeader("Route-Name", "addmedicine");
   xhr.onreadystatechange = function () {
