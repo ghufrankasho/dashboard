@@ -56,6 +56,11 @@ function validateClass() {
 
 
 function addMedicine() {
+
+  let admin = JSON.parse(localStorage.getItem('Admin'));
+  warehouse_id = parseInt(admin.id);
+  let token = localStorage.getItem('token');
+  token1 = String(token);
   const formData = new FormData();
   const select_class = document.getElementById('classifictions');
   const classment = select_class.options[select_class.selectedIndex].text;
@@ -78,7 +83,7 @@ function addMedicine() {
   }
 
 
-  console.log(...formData);
+  console.log(...formData,token1);
   const xhr = new XMLHttpRequest();
   xhr.open('POST', `${baseURL}/warehouse/medicine/add`, true);
   xhr.setRequestHeader("Authorization", "Bearer " + token1);
