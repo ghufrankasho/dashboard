@@ -46,7 +46,10 @@ function submitSignUpForm(event) {
          
              
           
-             
+            localStorage.setItem('Admin', JSON.stringify(response.user));
+         
+            localStorage.setItem('token', response.token);
+      
           
              window.location.href =`/home.html`;
             
@@ -87,8 +90,7 @@ function submitSignInForm(event) {
        
        
       };
-    // Add your AJAX request here
-console.log(formData);
+   
 
     var xhr = new XMLHttpRequest();
    
