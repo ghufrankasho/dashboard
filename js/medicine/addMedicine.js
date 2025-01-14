@@ -83,7 +83,7 @@ function addMedicine() {
   }
 
 
- 
+ console.log(token1);
   const xhr = new XMLHttpRequest();
   xhr.open('POST', `${baseURL}/warehouse/medicine/add`, true);
   xhr.setRequestHeader("Authorization", "Bearer " + token1);

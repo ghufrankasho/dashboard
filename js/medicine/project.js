@@ -120,11 +120,11 @@ function deleteProject(id) {
               // Optionally, refresh the projects list or remove the deleted project from the DOM
               displayProjects();
           } else {
-              const response = JSON.parse(xhr.responseText);
-              showAlert(response.errors ,response.message,response.status);
-              console.error('Delete error:', response.errors || response.message);
+            if(xhr.status === 204)
+             { if(window.confirm(" لا يمكن حذف هذا الداء لانه موجود في طلبيات بعض الصيدليات "))
+              {displayProjects();}
           }
-      }
+      }}
   };
   xhr.send();
 }
@@ -237,7 +237,7 @@ function searchproject(input) {
 }
 function showAlert(data, message, status) {
   // Show the success message in the "success-message" div
-  const Message = document.getElementById('project');
+  const Message = document.getElementById('projects');
   const div = document.createElement('div');
   console.log(data)
   if (status) {
