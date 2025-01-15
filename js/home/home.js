@@ -43,7 +43,7 @@ function displayrequest() {
                    requesttr.id='tra';
                     requesttr.innerHTML = `
                         <td>
-                        <a href="/prof.html"> <img src="${request.pharmacy.logo}" ></a>
+                          <img src="${request.pharmacy.logo}" >
                       
                         </td>
                         <td>  <a href="medicine/projDesc.html?projectId=${request.medicine.id}"> <img src="${request.medicine.photo}" ></a>
